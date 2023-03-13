@@ -1,0 +1,12 @@
+So, REST stands for Representational State Transfer.
+
+Baically REST is architectural style that defines a set of constraints to be used for creating web services or APIs.
+
+APIs define conventions for performing CRUD operations, like for create, the convention is
+
+1. API endpoint is '/blogs' and method is POST, the data to be posted is specified in body params like {
+    "title": "Secret Seven",
+    "author" : "Enid Blyton"
+}
+
+Left at 35:32, will continue theory portion later

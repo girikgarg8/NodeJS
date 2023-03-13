@@ -1,0 +1,68 @@
+High Level design: https://docs.google.com/document/d/1FyH16wreiVJ3Vtazm8msDB7-DPQsjRFSYDkLdWSvdJo/edit#
+
+What is a load balancer? Let's say I am using 1 HTTP server to serve the requests if the scale of the app is small, but if I am serving many requests at the same time, let's say 100000 requests per day, using one HTTP server may not suffice, so I use many HTTP web servers (maybe on AWS), so I need a load balancer which will forward the request to one particular server.
+
+Load balancer uses algorithms to determine which HTTP server, the request will go to
+
+See this image for more clarity:
+
+https://drive.google.com/file/d/1cSrW_djmpyiGf4kJMgQHfn5eiIH5HnTp/view?usp=share_link
+
+The diagram above if for monolithic load balancing, but monolithic architecture has issues with scalability and maintainability.
+
+In monoloithic architecture, all the code is present in one single code repository, and the components are tightly coupled.
+
+==Discussion on software design patterns===
+
+1. MVC (already discussed by sir)
+
+2. Singleton design pattern (examples: let's say there are 20 classes that need to log something), and there's a logger class. One approach could be to instantiate 20 objects of logger class for logging each file, but this is not wise. So, use singleton pattern here to create just one object of logger class which will be shared by all the classes. 
+
+Formally, from GFG:
+
+
+The singleton pattern is one of the simplest design patterns. Sometimes we need to have only one instance of our class for example a single DB connection shared by multiple objects as creating a separate DB connection for every object may be costly. Similarly, there can be a single configuration manager or error manager in an application that handles all problems instead of creating multiple managers.
+
+
+Definition: 
+The singleton pattern is a design pattern that restricts the instantiation of a class to one object. 
+
+About microservices:
+
+It is an architectural development style (or we can say a software design pattern) in which the application is made up of smaller services that handle a small portion of the functionality and data by communicating with each other directly using lightweight protocols like HTTP. The services in microservice based architecture are loosely coupled with each other.
+
+So, I will be using an API gateway after the load balancer
+
+The role of API gateway: It acts like a middlend, it collects the request from frontend, filters requests, if required also does authorization (though authorization can be a separate service too, but the beginning of authorization can begin from API gateway), it sometimes aggregates requests and reponses too.
+
+Aggregating requests is often done to improve performance and reduce network overhead. Rather than sending multiple requests to a server, each requiring its own round trip, the client can aggregate the requests into a single request and send them all at once. The server can then process the requests and send back a single response containing the results of all the requests. This can help to reduce the latency of the requests and improve the overall performance of the application.
+
+Aggregating responses, on the other hand, is often done to simplify the processing of data on the client-side. For example, if a server returns a large number of small responses, it may be more efficient to aggregate those responses into a single larger response, which can then be processed more efficiently by the client. Aggregating responses can also help to reduce the amount of network overhead, as fewer requests and responses need to be sent between the client and server.
+
+Orchestration layer service: what is it and why do I need it?
+
+Suppose I want to book a flight, then before booking a flight, I also need to search the flight (because the flight may have become unavailable by the time I book it), so for this one way is to let communication happen between API gateway and search flight service, and another communication between API gateway and book flight service. But, here I am overburdening the API gateway, the purpose of the API gateway was just to filter the requests.
+
+So, I can use orchestration layer service to allow communication to happen between two microservices, the seaparation of concern has now taken place. However, that doesn't mean that we can't allow communication to happen between API gateway and services, it just means that I am trying to make my system more efficient.
+
+Process queues: I need to use mailer like Gmail, but I can't send all the 15000 or so requests in just one go, and it's not even crucial, there can be a five minute delay or so, so I will use process queues.
+
+More depth of process queues:
+
+Whenever there is a bottleneck (like Gmail has a bottleneck for sending emails), let's say my source can send 100 requests per second but the destination can accept only 50 requests per second, so I will use a process queue in between the two services, the sender process will push the requests on the queue, while the consumer process is subscribed to the process queue, so it can pop the requests from the queue and service the requests.
+
+Emailing is heavy task, because there's a SMTP request.
+
+All these services will interact with the RDBMS too. For RDBMS, we can't have horizontal scaling, we'll be using vertical scaling only.
+
+See the diagram here: https://lucid.app/lucidchart/14e8075c-a77d-4865-a00a-a25ccf3e53f0/edit?invitationId=inv_35616173-0d15-4271-8e57-09f38dbe1bad&page=0_0#
+
+The cron command-line utility is a job scheduler on Unix-like operating systems.
+    
+Q. Why can't I set up MySQL on the same machine as the application server?
+
+1. If the machine goes down due to any reason, the application server and machine, both will be down
+
+2. Horizontal scaling won't be possible, because in different machines, there would be copies (sharding) of the database, which is not desirable.
+
+

@@ -1,0 +1,28 @@
+For sending reminder to users about their upcoming flight, we need SMPT server.
+
+We are not going to design our own custom SMTP server, we'l be using Gmail's SMTP servers to implemtnign the mailing functionality
+
+nodemailer is a Node.js package that allows you to send emails from your Node.js applications. It provides a simple and easy-to-use interface for sending emails using a variety of email services and protocols.
+
+We'll be using transport object in the nodemailer pacakage, transport object is a configuration object that specifies how emails will be sent, like the host, port, and username password required for mailing service.
+
+Techincally, we can specify any email in the 'from' section in nodemailer, but there are some points to consider:
+
+Authentication: Email service providers typically use email authentication protocols (such as SPF, DKIM, and DMARC) to prevent email spoofing and phishing attacks. When you send an email with a from address that does not match the domain you are sending from, the email may be rejected by the recipient's email service provider or marked as spam.
+
+Trustworthiness: When you send an email with a from address that is not associated with your domain, the recipient may be suspicious of the email's authenticity and may not trust the content of the email.
+
+Legal implications: In some jurisdictions, sending an email with a false or misleading from address may be illegal and could result in fines or other legal consequences.
+
+In the business logic, I want that whenever the airplane flight is booked,the mail should be sent in 1-2 minutes but for reminder, if the flight is scheduled for Monday, I can send the mail on any time, maybe 2-3 hours before thr flight
+
+I will be setting up cron jobs for this purpose. What are cron jobs? Cron jobs are basically scheduled jobs, so I can schedule that some particular task happens every 2 minutes or every hour or every day etc.
+
+I'll be using a package called node-cron which allows me to schedule jobs as cron jobs. 
+
+For my particular business use case, I can set up cron job for every two minutes to check for new bookings, if there are any new bookings, send a mail to the people. And every 24 hours, the values will be deleted from the database.
+
+How does cron actually work? In UNIX based systems like Linux or Mac, there is a file called crontab, I can specify the scripts to be run in the crontab file.
+
+
+The job.js file basically has the logic of the cron job, and the cron job (which runs after every 2 minutes)  which we have defined inside the job.js file is to get details of those emails which have status as 'pending' (yet to be sent), and to schedult these emails to be sent using the email service.

@@ -1,0 +1,72 @@
+In order to implement the authentication, I basicaly just need a User model, which stores the username and password, to authenticate the user
+
+The validation for a valid email (like foo@bar.com) is provided by sequlize by specifying validate: {isEmail:true} in the model
+Similarly validation for password length is provided by specifying validate:{
+          len:[3,10]
+}  in the file
+
+In authorization service, I need validation both at the frontend side as well as the backend side.
+
+Some examples of frontend and backend validation:
+
+Frontend Validation:
+
+Ensuring that the email address entered by the user is in the correct format (e.g., example@example.com)
+Checking that the password meets the minimum length requirement (e.g., at least 8 characters)
+Ensuring that the "confirm password" field matches the original password field
+Displaying error messages in real-time if the user has entered incorrect or invalid information
+Backend Validation:
+
+Checking if the email address entered by the user exists in the database
+Ensuring that the password entered by the user matches the hashed password stored in the database
+Checking if the user's account is active and not locked or suspended
+Implementing rate limiting to prevent brute-force attacks on the login form
+Using prepared statements and input validation to prevent SQL injection attacks
+
+Storing passwords directly isnide the database is not a good design, so I will use bcryptjs package (which uses bcrypt hash algorithm) to store the hashes values of passwords in database
+
+Now the question arises, where do I setup bcrypt (or in other words, where should the process of hashing take place inside the app?)
+
+Possible candidates are: controllers, services and models
+
+The best answer is models, because in SQL, I have something known as triggers, so I can enforce a row level trigger before each insert into the database
+
+Seqeuelize ORM provides the functionality of triggers in SQL, through Hooks in sequelize
+
+Bcrypt-JS package provides the functionality of both encrypting and decrypting the plain text password.
+
+What is salt in bcrypt-js? 'Salt' is a general term, used in many encryption algorithms, it is some extra or additional input which we pass to any encryption algorithm.
+
+Why 'salt' is needed? Let's say a hacker gets the knowledge of which encryption algorithm we are using in the app, still the hacker won't have access to the salt which we have used, so the algorithm would be fool proof
+
+For signup functionality, I just need a model to store the username and password of users, and a bcrypt or similar hashing package, so that passwords can be stored in hashed form.
+
+For login functionality, I need JWT, to store information about the session between the client and server
+
+High level design of an OTP based system: Let's say I am using 6 digit OTPs, then generate 6 digit random numbers, and store them in database. After every 2 hours (this number can vary), clear all the OTPs from the database
+
+
+In order to create Json web token, I will use a package called "jsonwebtoken" from NPM, it will take an object, private key as the arguments and generate a token, the same package also provides functionality for verifying the token too
+
+
+One very important question is that, where will the frontend store the JWT token each time it sends a request? The possible options are HTTP header, URL params and request body.
+
+The answer to this question is HTTP header, in fact, many authentication algorithms use HTTP header.
+
+One more important thing, when I want to write the logic for isAuthenticated, I just don't want to check whether the JWT token is valid or not,I also want to check whether the corresponding user exists in the database or not, because there could be a situation like the JWT token is valid for 2 days, bu the user deleted his profile before these 2 days, so in this case, the JWT token would still be valid but the entry of the user has been deleted from the database, so I define custom function isAuthenticated in the user-service file
+
+===Authorization===
+
+For implementing authorization, I can define a table Roles to define the roles of different users
+
+Refer this article:
+https://medium.com/@tavilesa12/dealing-with-many-to-many-associations-in-sequelize-bddc34201b80
+
+See the magic methods section,many to many associations provides us with serveral functions for associations like has,get,remove and count.
+
+
+Services contain all the business logic of the application like creating web tokens, verifying web tokens, verifying username and password combination etc
+
+Associations (1 to 1 or 1 to many) are always defined inside the models
+
+We will never expose business level errors to the frontend, so we can use custom class "client errors" for this

@@ -1,0 +1,472 @@
+Role of a backend engineer:
+1) take design decisions (architectural design)
+2) how to divide your tasks
+3) write APIs, interact with databases, write business logic, maintain deployment, testing and maintenance, write documentation  
+
+Javascript is a multi-paradigm, multipurpose programming language
+
+Programming language: decison making capacbility, HTML doesn't have decision making capability so it's not a programming language
+
+console is a javascript object and log is a function of console object
+
+ 
+Paradigm: style of writing code examples: object 
+oriented programming, functional programming, procedural programming
+
+7 different primtive data types in JS:
+null, undefined, boolean, string, number, symbol
+
+Js doesn't disitinguish between character and string, so 'a' and "abc" are both string, there is no special data type for characters.
+
+object is made from these primitive data types
+
+The answer for typeof any value will be returned in the form of an object
+
+console.log(typeof null) is a corner case, it returns an object instead of null
+
+console.log(typeof NaN) will return a number, NaN is also a number in javascript
+
+Program is code written in a file, process is a program in running state
+
+Variables are buckets in the memory(RAM) which stores values
+The name of the bucket in the memory is called Variables
+
+three ways to initialise a variable in JS: let, var and const (difference between them will be explored while learning about scopes)  
+
+Symbols are used where we want absolutely immutable objects (will be explored later)
+
+-0 is also taken as false
+
+== is called abstract equality and === is called strict equality, and similarly 
+!== is called abstract inequality and !=== is called strict inequality (this is related to the concept of coercion)
+
+string based operator, + will add two strings and return their answer, for example "abc" +"sanket" will return "abcsanket"
+
+what happens in cases like "1"+2? will be discussed in class of coercion
+
+If we don't return anything in Javascript function, it will return undefined by default
+
+4 fundamentals features of JS:
+0) coercion
+1) scopes
+2) closures
+3) async js
+
+===COERCION===
+coercion is of two types: implicit conversion and explicit conversion
+
+In languages like C/C++/Java, types exist for varibales, meaning that the bucket in the memory has type int/char, so while declaring int x=10; we fix that the bucket will only have data of integer type
+
+Whereas in language like JS, typex exist for values, meaning that if I use let x=10 and then x="Hello", it is valid because it is what inside the bucket that defines the data type
+
+The statement: "everything in javascript is an object" is false. Because apart from the 6 primitive data types, everything is an object. 
+
+Example: boolean varibales are not objects
+
+abstract operations: (from ecmascript documentation): these are the functions which can't be used bt the end user but they are internal functions that are used internally by Javascript, they are mentioned in the Javascript documentation for understanding of developers
+
+Documentation of ECMAScript says: 
+ECMAScript language implicitly performs automatic type conversion as needed, in order to understand how it works, JS provides us abstract operations. The conversion abstract operations are polymorphic, can accept all data types defined in ECMAScript but not something out of it (like complex number is defined in python but not in JS)
+
+The first abstract operation that we need to learn is toPrimitive
+
+===toPrimitive===
+toPrimitive  takes an input argument and tries to convert into a non object type (primitive type), if it can't convert it throws an TypeError
+
+ the toPrimtive abstract operation takes an input argument and an optional Preferred Type argument
+
+This operation converts the input to a non-object type values. If an argument is capable of getting converted into more than one primtive type, then the function uses preferred Type argument to resolve it
+
+As we said that toPrimitive is an abstract operation, so we cannot invoke it but JS internally can invoke it
+
+From the documentaion:
+https://262.ecma-international.org/10.0/#sec-abstract-operations
+
+Assert: input is an ECMAScript language value.
+If Type(input) is Object, then
+If PreferredType is not present, let hint be "default".
+Else if PreferredType is hint String, let hint be "string".
+Else PreferredType is hint Number, let hint be "number".
+Let exoticToPrim be ? GetMethod(input, @@toPrimitive).
+If exoticToPrim is not undefined, then
+Let result be ? Call(exoticToPrim, input, « hint »).
+If Type(result) is not Object, return result.
+Throw a TypeError exception.
+If hint is "default", set hint to "number".
+Return ? OrdinaryToPrimitive(input, hint).
+Return input.
+
+====Explanation of toPrimtive Algorithm====
+Assert: means verify
+
+JS intialises a variable called hint
+
+if no preferred type is present, hint is intialised to default
+
+else if PreferredType is string, hint=="String"
+else if PreferredType is number, hint=="Number"
+(note that higher preference is given to string than number)
+
+if hint still remains default, then set hint to "number"
+
+At the end, the function OrdinaryToPrimitive is called
+
+Explanation of ==OrdinaryToPrimitive== (Just for remembering, OTP OrdinaryToPrimitive means anything to primitive) in easy way:
+
+if hint/preferred type is number then on our input argument we call valueOf() function we get a number and if it doesn't give a primtive we call toString() function
+
+otherwise if hint argument is "string" then we first call toString() and then valueOf()
+
+==toString() function==
+undefined: return "undefined"
+null: return "null"
+boolean:  returns "True"/"False" as the case may be
+Number: calls NumberToString() function
+String: returns the passed argument
+Symbol: Throws a TypeError 
+Object: calls the toPrimitive function, let's say the output is a then recursively passes a into toString function
+
+==addition operator (+)==(addition wokrs on lprim and rprim)
+let lprim=toPrimtive(lval) and let rprim=tPrimitive(rval)
+
+if either of lrprim or rprim is string:
+    then lstr=toString(lrpim)
+        rstr=toString(rprim)
+        return string concatentation of lstr and rstr
+if neither of lprim or prim wasn't a string:
+    then let lnum be toNumber(lrpim) and let rnum be toNumber(rprim)
+    return result of addition to lnum and rnum
+
+==ToNumber==
+Undefined return NaN (Little discussion about NaN: NaN is used to represent an invalid index, for example if in a array an element doesn't exist, then we could return -1, but in language like python -1 also denotes an index, so we return NaN: an indicator of invalid index)
+
+Null returns +0
+Boolean return 1/0 as the case may be
+String: some Algorithm, the conclusion of algorithm is that if you convert string to number it will rturn that else not
+Some examples of this algorithm:
+""->0
+"0"->0
+"-0"->-0
+"3.145"->3.145
+"0."->0
+"."->NaN
+symbol: typerror 
+object: call toPrimitive, let's say output is x, recursively call toNumber on x as well. 
+
+===Working of - (minus) ===
+it just converts both opernds to number using toNumber() abstract function (let them be lnum and rnum), and then subtract them 
+
+NaN+-NaN is NaN because any operation with invalid number is invalid
+
+Infinity is different from NaN, 3/0 is Infinity 3/"Sanket" is NaN
+
+ASCII value is not taken for strings so 'a'-4 will return NaN
+
+Some rules for array: array of null, undefined,"0" and "" will get converted to zero
+[null]=[undefined]=["0"]=[""]=[] will all get coerced to 0
+
+array of NaN will return NaN [NaN]=NaN
+
+but array of [1,2,3] will return a NaN
+
+
+===Note=== Whenever there is a numeric operation, and we don't have a number, toNumber() is called, for example, in the subtraction operation.
+
+Example: 10 -{"a":10} will give NAN, as object will call toPrimtive() with preffered type as Number and toPrimtive() will not be able to find valueOf() and toString(), however both valueOf() and toString() are inbuilt functions so we can define them 
+
+Note that this toString() is different from the abstract function ToString() which we discussed above
+
+10-{"a":10,valueOf() {return 2;}} will give 10-2=8
+
+If valueOf() doesn't return a primitive, we call toString() method
+
+10-{"a":10,valueOf() {return {};}, toString() {return "5"} } will return 10-5=5
+
+10-{valueOf(){return 50},valueOf() {return 150},"a":100} will return 10-150 because the new valueOf will  override the older one, similar to hashmap in C++ if we have mp['a']=1 and later on we change it to mp['a']=2 then final value remains 2
+
+10-{"a":10,valueOf() {return {};},toString() {return "5"}}; will return "5" from the toString() and again "5" will be recursively passed to the toPrimitive() function
+
+Default behavior of toString() and valueOf() function:
+a={"x":1}
+console.log(a.toString()) #will print '[object Object]' (it is a random string)
+console.log(a.valueOf()) # will print the object itself {x:1} (which is again on object itself, non primtive in nature)
+
+for an array (an array is also a type of object), toString() and valueOf()'s behaviour is slightly different
+valueOf will still return the object
+but toString will print the object without the square braces '[' and ']'
+
+For example, for this code:
+const u=[10,20];
+console.log(u.toString()); // this will print 10,20
+console.log(u.valueOf()); //this will print the object [10,20]
+
+
+Abstract function ToString() explained:
+
+1) converts undefined to "undefined"
+2) converts null to "null"
+3) converts true to "true" and false to "false"
+4) symbol: gives TypeError exception
+5) number: many rules, but the gist is that number 1 gets converted to "1", and both 0 and -0 gets converted to "0"
+6) object: call toPrimitive with hint as string
+
+some special case of arrays with toString: [1,2,3] will get converted to "1,2,3" (with square braces removed), empty array [] will get converted to "" (empty string) and [null,defined] will get converted to "," (only comma is left)
+
+some more special cases for toString: if there are multile empty arrays like [ [], [], [] ] or [,,,] (multiple commas), the resulatnt string will be ",,,"
+
+====ToBoolean and equality operator ====
+A special case: "Hello" +{} prints Hello object Object
+but {} + "Hello" gives NaN, not able to print object
+or a similar case where can't define an object like {"a":20}, reason is that whenever anything starts with {, JS treats like a fnction expression, so we need to wrap it inside brackets to make it work, something like ({"a":10})+'hello' will work
+
+ToBooleana abstract function converts given type to a Boolean value. ToBoolean works a bit different than toNumber and toString abstract operation.
+It maintains a list of values which when received as an argument returns False and everything else returns True
+
+List of values which return false:
+null,undefined,+0,-0,NaN,""(empty string), false (boolean)
+else everything else (objects,symbols,etc) will return true
+
+In order to test the toBoolean, we can use logical not operator (!), internally logical NOT operator calls the toBoolean abstract function on the primitive object, and then, if the boolean returned by toBoolean is true, then logical NOT will return false, else it will return true
+
+console.log(!console.log(0)): the inner console.log(will return undefined), so (!undefined) will return true
+
+Common misconception about == and ===: "== checks for only value and === checks for both value and type:  this statement is absolutely false
+
+The main difference between == (abstract equality operator) and === (strict equality operator) is that: 
+
+1) abstract equality (==) does coercion, if type of objects on LHS and RHS are not same  (for doing this coercion, it can call different functions like ToString or ToNumber etc)
+
+2) strict equality (===) never does coercion of any objects, if data type of objects on left and right hand side are not same
+
+Let's study strict equality operator first (===)  (bit shorter algorithm) (fro the documentation): https://262.ecma-international.org/10.0/#sec-strict-equality-comparison
+
+1. if type (x) is different from type(y), (like on LHS string and on RHS object), then straight away return false
+
+2. if type(X) is number and type(y) is also number, then some rules are followed:
+
+2.1 if either of x or y is NaN, straight away return false (Nan===NaN) return false in Javascript, this is a kind of exception we can say
+
+2.2 if x and y are same numbers like 7 and 7, return true
+
+2.3 if the two numbers are "+0" and "-0", then return true (means +0===-0 in JS)
+
+2.4 otherwise for the case when both the variables are numbers and it was not returned in any of the previous cases, then return false
+
+3. if types of the two variables is not a number, then a function SameValueNonNumbers (SVN for remembering) is called https://262.ecma-international.org/10.0/#sec-samevaluenonnumber, this is just a fancy name, in essence it just checks for undefined==undefined,null==null, object equality (for object equality both objects should point to same memory location,similarly for symbols too, equality is calculated on the basis of memory location, they are not compared by value) (Important point: don't commit mistake of saying that objects or symbols will be checked by value), for boolean it checks for both same, for string it checks all characters should be same etc.
+
+Abstract equality operator(==)
+
+1. if types of x and y are both same (both are numbers or oth are boolean or both are strings etc), then the result of strict equality is returned 
+
+2. otherwise if types are not equal, then appropriate coercion is performed, for example:
+    2.1 null and undefined, always returns true (kind of exception)
+    2.2 if one is string (x) and other one is number (y), then then the result of y==toNumber(x)
+    2.3 if any one out of x or y is a boolean, then return the answer for y==toNumber(x) (assuming x is the boolean)
+    2.4 if x is any one out of string,number or symbol and y is object, then return the answer of x==toPrimtive(y)
+3. if not matched in any of the above cases then return false
+
+n JavaScript and other languages, primitives values don’t have methods or properties, so if you want to use them, you need to use a wrapper.
+
+
+Primitives are the simplest elements of a programming language. JavaScript has six primitive types: string, Number, boolean, null, undefined, and symbol, and everything else are objects.
+
+Index
+AutoBoxing
+Manual Boxing and Gotchas
+Unboxing
+Conclusion
+AutoBoxing
+Boxing is wrapping a primitive value in an Object. When you treat a primitive type like if it were an object, e.g., calling to the toLowerCase function, JavaScript would wrap the primitive type into the corresponding object. This new object is then linked to the related built-in <.prototype>, so you can use prototype methods on primitive types.
+
+REPL: Read Evaluate Print Loop
+
+===Abstract,NaN and special types===
+
+NaN (Not a Number)
+typeof NaN // number
+NaN doesn't actually mean not a number, rather it gives notion of an invalid number
+
+NaN is the only primtive value in JS which doesn't follow identity propoerty and is not equal to itself
+
+Let's consider a case: let's say there is a function compute
+
+function compute(){
+    ....
+    return val;
+}
+
+let x=compute();
+Now suppose result of compute() function can be NaN. And we have to detect if x is NaN
+
+Approach number 1: just check if x===x is false, it must be NaN. This approach fails for the case of Symbols and Objects as well (because for symbols and objects, the strict equality is checked by their memory location)
+
+There's a special function in JS called isNaN which is used to check if a computed value is NaN, but this function has some issues
+
+What is the issue? The issue is that: isNaN tries to coerce the passed argument into a number, before checking for the value. 
+So console.log(isNaN("sanket")) will try to convert sanket to number, it will not be able to convert it into a number, so it will return NaN, and hence isNaN will print true
+
+One possible solution is to use: (typeof(x)=='number' && isNaN(x)), try this on different cases, it will not fail
+
+Another possible solution is to use Number.isNaN function, it basically implements the expression (typeof(x)=='number' && isNaN(x)) internally (Number.isNaN will not do any coercion)
+
+
+console.log is not mentioned in the ECMAscript documentation, it is made available from runtime (don't say browser )
+
+Where to use == and when to use === ?
+1) use == when we are sure about the data types of both left hand side and right hand side, so I am not afraid of using coercion. try to use == wherever possible, so that it is easier for new developer too to read the code
+
+Based on how the languages execute the code, we can categorise the languages in the following categories:
+
+1) Compiled lanuages: like C++ (they firstly compile (read) the entire code and if there is any error in any of the lines, it will throw an error)
+2) Interpreted languages:  (they execute the code at runtime, and if line 7 has a bug, all the lines from 1 to 6 will still be executed and when the control comes to line number 7, it will throw an error)
+
+Common misconception: Python is an interpreted language. 
+Just try the code: print("Hello") 7.print("Bye"), this code will not even print Hello, if Python would have been a purely interpreted language, then it should have printed "Hello" at least
+
+Similarly for JS, if I try console.log("Hello")
+7.console.log("Hello") will not even print "Hello",if it would have been a purely interpreted language
+
+But console.log("Hello")
+console.log(a) will print "Hello" and then give an error saying a is not defined
+
+An example of purely interpreted language is Shell script, if I write ls echo "Hello" iwediew in a shell script and execute it, the shell script will exceute first two commands successfully and throw error at third statement
+
+3) There is a third category of languages too, which is called as hybrid. For example for a Java code, the sample.java file is firstly compiled into a bytecode file (this bytecode file is not an exceutable file unlike CPP), and then this bytecode is interpreted line by line.
+
+Something similar happens in Javascript, so always keep in mind that Javascript is firstly compiled and then interpreted
+
+===Concept of Boxing in JS===
+examples: "abc".length returns 3 (but "abc" is a primtive so how does JS count 3??)
+let x=9;
+Here I am talking about that toString() function which was defined in the objects 
+x.toString() returns '9' and Number(9).toString() too returns '9'
+
+let x=9;
+typeof(x) will print 'number', so the concept is that if I try to put any operation where it should behave as an object (like x.toString()), it will behave like an object
+
+Defintion of boxing: It is a phenomenon in JS when it tries to convert primitves into objects
+Boxing can be both manual(explicit) and automatic(implicit)
+
+How to do explicit boxing in JS? Either use the function Number() or use parantheses () or assign it to a vraible using let or use syntax like 8..toString()
+
+====SCOPES PART 1====
+
+Meaning of the word scope? In simple words, scope is simply where to look for things, In specific to programming, we are looking for variables and functions
+
+In JS, we have 3 types of scopes:
+1) Global scope
+2) Function scope
+3) Block scope
+
+Global scope=== If a variable is present in a global scope, then it is accessible everywhere in JS file.
+
+But, how we define a variable or a function in global scope? There are many ways, one of the way is to declare/define variable or the function outside of any function and any block (any if/else block).
+
+Function scope== In a function, the visibility of a variable/function is just inside the outer function
+
+function fun(){
+    var x=10; //here x is just accessible inside fun, not outside
+}
+
+Block Scope==In JS, we can use a pair of curly braces to declare a block { ....some code }
+Now if a variable/function is only accessible or visible inside a block then it will be having block scope
+
+Block can be an if/else block or while block or a raw block 
+
+One interesting question: will function fun(){ } behave like function scope or block scope? Answer is it can behave like both, detailed answer will be explored later on
+
+BURNING QUESTION: let,var,const (what is the difference between these and where to use what)
+
+1) var-> whenever we use a var anywhere inside a function, the variable gets function scope.   (In function scope, even if I use the variable before it's Defintion, something like console.log (x) even before var x=10; x would still be available with the value undefined. Why undefined? lexical scoping)
+If we use outside a function, no matter if it is enclosed in a block or not, it will give global scope
+
+
+2) let-> whenever we intiialise a variable with let, it always gets the scope of enclosing block. (note cardefully that it is not a function scope, because if we try to console log before declaring, it will print undefined )
+
+If we declare let outside any block, then it doesn't get complete global scope (By complete global scope I mean if I try to console log x before let x=9, it will throw an error)  
+
+3) const-> pretty much like let, it is a also block scoped, but differnece is that value of variable having const cannot be changed by either redeclaration (like const x=9) nor re-assignment (x=9) (see MDN docs on const,let and var for exactly same Explanation)
+
+===V.V. IMP. HOW DOES JS PARSE THE CODE===
+So we know that JS is not interpreted, it definitely is hybrid i.e compiled+interpreted.
+
+So definitely we try to execute a JS code, JS first parases the whole code, in this parsing phase, it assigns scopes to variables or functions (called scope resolution) . Once done, then it reads the code and executes it.
+
+Every variable in the code can be used in one of the following ways:
+
+1) either it will be getting a value assigne to it i.e. used as a target example: x=10
+2) or it will be used to retrieve a value i.e. it will be used as a source y=10+x here x is being used as a source
+
+What JS does is, it will start the parsing phase. Outside everything it maintains a global scope, but the moment it goes inside a function it starts maintaining scope of that function also. 
+
+Consider this code:
+```
+var teacher="Sanket" --->1
+
+function fun(){ --->2
+    var teacher="Pulkit"; ---->3
+    console.log(teacher) ---->4
+}
+
+fun()  --->5
+``` 
+
+Phase-1 parsing:  we will just do scope resolution. (not values of the variables) 
+Whenver we declare a variable using let/var/const ore if we initialise a function it is a formal declaration.
+Javascript loks for formal declaration in the first phase.
+
+Imagine a person like Scope manager for easy understanding
+
+In line number 1, it is a formal declaration, Javascript asks Scope manager, do you know any "teacher" in global context? Scope manager says "no", so JS assigns scope of global to teacher variable (we are not concrened about value of any variable in phase-1)
+
+In line number 2, it is a formal declaration of function, JavaScript asks scope manager, do you know any "fun" in global scope, scope manager says no, so JS assigns scope of global to fun (and asks scope manager to remember it)
+
+In line number 3, it is a formal decelaration of a variable, so Jaavscript asks scope manager, do you know any "teacher" in scope of function "fun", scope manager says "no", so JS assigns scope of fun to teacher (and asks scope manager to remember it)
+
+Line number 4 and 5 are not formal declarations, so they are not touched during the first phase
+
+---Phase 2 (execution phase) ---
+
+Line number 1, JS asks scope manager, do you have any "teacher" in global context, scope manager says "yes", so JS assigns "sanket" to  the variable "teacher"
+
+Control then jumps to line number 5 (function call), at line number 2, JS asks scope manager, do you know any "fun" in global scope, scope manager says "yes", so JS calls that function
+
+In line number 3, JS asks scope manager, do you know any "teacher" in the scope of fun() function, scope manager says yes, so JS assignes value of "Sanket" to teacher variable
+
+In line number 4, I am trying to use variable as a source, so JS asks scope manager, do you know any "teacher" in scope of fun() function, scope manager says yes, then JS prints the value of that variable
+
+Let doesn't allow redeclarations, while var allows redeclarations 
+
+Practised some more interesting examples from the video, writing the theory here:
+
+Lexical scoping vs dynamic scoping: lexical scoping means the scope resolution has been done at the compile time already, dynamic scoping means scope resolution is done during interpretation only. JS uses lexical scoping.
+
+When we don't find a varible in the immediate scope, we look for outer scope one by one. 
+
+Concept of Autoglobals: In JS, if we keep on searching scope of a variable in outer scopes and no where it is found (not even in global scope), then JS automatically considers it in global scope. This happens during execution phase (phase-2, not during phase-1). 
+
+Important note: autoglobals only works with target referenece and not source . This meansif there's a statement like teachingAssistant="Vibhav",  autoglobal will assign global scope to teachingAssistant, but if I have console.log(teachingAssistant), and I am not able to find teachingAssistant in any scope, autoglobals can't assign it global scope because it being used as a source of information.
+
+===SCOPES (PART 2)===
+
+undefined vs undeclared
+
+undefined is a variable state when the scopes already know about it but in the exceution phase we hae not allocated it a value, undeclared is a variable state when we never formally declared a variable and before assigning it a vaue it has a chance to become autoglobal
+
+More examples discussed in video
+
+Concept of hoisting: 
+gun();
+function gun(){
+    console.log("Shoot ")
+}
+
+If you do it by the concept of parsing and interpretation, it is absolutely clear why this function gets called
+Hositing is not a black magic, the statement that "the code gets pasted at the top " is absoluetly nonsense, always explain hositing by two way parsing and implementaion method of Javascript.
+
+The word "hoisting" is not present in official documentation of Javascript. 
+Hoisting is a direct consequence of lexical scoping, due to which we can access some functions and variables before declaring them,which gives a notion that they are moved up in the file (but actually this doesn't happen)
+
+let variable is available only after the lines written below it. (let uses block scope, so scope will be available only after the variable is defined using let)
+
+In strict mode, autoglobals are prohibited

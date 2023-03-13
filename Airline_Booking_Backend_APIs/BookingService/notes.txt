@@ -1,0 +1,17 @@
+We are using morgan package from NPM here, in this microservice, morgan is a logger middleware
+
+For status of bookings, we'll be using three types of values in the table: 'In process', 'Booked' or 'Cancelled' 
+
+We need to write some business logic while making the booking: like checking if the seat is available or not, after making the booking the number of seats still available has to be reduced, etc.
+
+Migrations help to store incremental changes to database schema, for example if two columns cost and seats were added to the schema, then from the model it won't be clear when these columns were added, but looking from the migration it would show incremental changes
+
+===Connecting flights microservice and bookings microservice using HTTP ===
+
+Firstly, why is this connection required? There are atleast two reasons,
+
+1) Firstly, if the client (frontend) has logged on to the webiste, but the frontend is idle for 10-15 minutes, meanwhile the prices of flight may have changed, so the bookings microservice needs to communicate with the flights service
+
+2) Secondly, the frontend may always send 0 as the totalCost if a hacker comes to know about the payload, if the backend doesn't have any validation, it will be a very bad design
+
+As I have to make HTTP requests (GET,POST) etc from one microservice (booking service) to  another microservice (flights microservice), I can use the axios library as it provides a convenient platform to make different HTTP requests

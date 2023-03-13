@@ -1,0 +1,404 @@
+Project structure we'll follow
+
+    -src/
+        index.js //server 
+        models/
+        controllers/
+        services/
+        utils/
+        config/
+    
+    -tests/[later]
+
+    -static/
+    -temp/
+
+The folder structure I have discussed above, is role based folder structure, there can be another approach too for the folder structure which is based on the featurs, like
+
+flight
+    -models
+    -controllers
+
+booking
+    -models
+    -controllers
+
+For now, we are going with role based feature folder structure.
+
+===Difference between models and repositories folder===
+
+In a Node.js based project, the repository and models folders are common directory names used to organize and structure the code related to data storage and retrieval.
+
+The repository folder typically contains the code that interacts with the data storage system, such as a database, file system, or external API. It encapsulates the logic for CRUD (create, read, update, delete) operations on the data and provides an abstraction layer between the application code and the storage system. The repository pattern is a common design pattern used in software development to isolate the data access code and make it easier to maintain and test.
+
+The models folder, on the other hand, contains the code that defines the data structures and business logic of the application. It typically includes definitions for entities or objects in the system, along with their properties, relationships, and methods. The models layer is responsible for representing the data in a meaningful way and enforcing business rules and constraints.
+
+The main difference between the repository and models folders is their focus and responsibility. The repository folder is responsible for handling the data storage and retrieval operations, while the models folder is responsible for defining the data structures and business logic.
+
+In some projects, these two folders may be combined or organized differently, depending on the specific requirements and design decisions. However, separating the data access code from the business logic can help to improve the maintainability and scalability of the project.
+
+--Setting up envionment variables in Node
+
+Firstly, what exactly are enviornment variables and why do I create environment variables when I install some software?
+
+Environment variables are dynamic values that can affect the behvaior of a running process or program. They are part of the environment in which a process or program runs, and they are usually set by the operating system or by the user.
+
+When you install a new software, you may need to set environment variables in order to configure the software to work properly on your system. Some software applications require specific environment variables to be set in order to operate correctly, and others may allow you to set environment variables to customize their behavior.
+
+For example, if you install a software package that requires a specific version of a library, you may need to set an environment variable to tell the operating system where to find the library. Alternatively, if you install a software development kit (SDK), you may need to set environment variables to specify the location of various tools and libraries that are needed for building and testing software.
+
+
+==What is difference between envionment and system variables===
+
+In computing, both environment variables and system variables are used to store values that affect the behavior of programs or processes running on a system. However, there are some key differences between these two types of variables.
+
+System variables are set by the operating system or by the system administrator and are available to all users and processes on the system. These variables are used to configure the system itself and are generally not intended to be modified by individual users or programs. Examples of system variables include the path to system binaries and libraries, the default system language, and the hostname of the computer.
+
+Environment variables, on the other hand, are set by the user or by individual processes and are specific to the current user or process. These variables are used to configure the behavior of individual programs or processes and are typically not available to other users or processes on the system. Examples of environment variables include the current user's home directory, the current working directory, and the location of temporary files.
+
+Another key difference between system variables and environment variables is that system variables are generally set at boot time or system startup, whereas environment variables are set at runtime or when a program or process is launched. System variables are typically stored in configuration files or in the system registry, while environment variables are often set through command-line arguments or in configuration files specific to individual programs or processes.
+
+
+There is one important note, that used to confuse me a lot, but hopefully, it won't confuse me now :)
+
+CommonJS:
+
+CommonJS is the module system used by Node.js, and it uses the require() and module.exports functions to import and export modules. Here is an example:
+
+function add(a, b) {
+  return a + b;
+}
+
+module.exports = { add };
+
+// app.js
+const { add } = require('./math.js');
+
+console.log(add(2, 3)); // outputs 5
+
+
+ES6 modules:
+ES6 modules are a module system introduced in ECMAScript 2015, and they use the export and import keywords to export and import modules. Here is an example:
+
+// math.js
+export function add(a, b) {
+  return a + b;
+}
+
+// math.js
+export function add(a, b) {
+  return a + b;
+}
+
+
+So, the conclusion is that in React code I usually use ES6 module system but in NodeJS code I often use CommonJS module system.
+
+Q. What is body-parser and what is it used for?
+
+body-parser is a middleware module for Express.js that helps parse the request body of incoming HTTP requests. It extracts the data from the request body and makes it available in the req.body object.
+
+The body-parser.json() middleware is used to parse JSON data in the body of request. 
+
+The body-parser.urlencoded({extended:true}) middleware is used to parse form data in the body of request. 
+
+URL-encoded is a method of representing data in a format that is suitable for transmission over the internet. In URL encoding, data is converted into a sequence of characters that can be transmitted safely over the internet, even in cases where the data contains characters that are not valid in a URL or might be misinterpreted by web servers or web browsers.
+
+Q. What is URL encoding? And what does extended: true mean in bodyParser.urlencoded()?
+
+URL encoding replaces each non-alphanumeric character with a percent sign (%) followed by two hexadecimal digits. For example, the space character (which is not valid in a URL) is encoded as "%20", and the plus sign (+) is encoded as "%2B".
+
+This encoding is used in various contexts, such as submitting form data in HTML forms, passing parameters in URLs, and encoding special characters in the body of an HTTP request. It ensures that the data is transmitted safely and can be correctly interpreted by web servers and web browsers.
+
+Suppose you have a form with the following input field:
+
+<input type="text" name="comment" value="I love coffee & tea!">
+
+If this form is submitted with the GET method, the form data will be included in the URL as query parameters. However, the value of the comment field contains a special character (&) that has a specific meaning in URL syntax. To avoid any issues with the interpretation of the & character, the data is URL-encoded before being transmitted:
+
+
+https://example.com/submit?comment=I%20love%20coffee%20%26%20tea%21
+In this URL, the %20 encodes a space character, and %26 encodes the & character.
+
+Setting extended to true allows for more complex URL-encoded data to be parsed, such as arrays or nested objects.
+
+===Object Relational Model===
+
+The Object-Relational Model (ORM) is a programming technique that maps between the object-oriented paradigm used in programming and the relational database model. It allows developers to work with databases using an object-oriented syntax that is more familiar to them, rather than writing raw SQL queries.
+
+Suppose we have a database with a table called "users", which has the following columns: id, name, email, and age. In a traditional relational model, we would interact with the database using SQL queries, like so:
+
+sql
+Copy code
+SELECT * FROM users;
+This would return all the rows from the "users" table, as a set of rows and columns.
+
+With an ORM, however, we can interact with the "users" table using an object-oriented syntax. We would define a model class for the "users" table, which would map the columns of the table to properties of the class:
+
+
+class User {
+  constructor(id, name, email, age) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.age = age;
+  }
+}
+Using this model class, we can now interact with the "users" table using object-oriented syntax, like so:
+
+
+const users = await User.findAll();
+This would return all the rows from the "users" table, as an array of User objects.
+
+
+Q. Why do I need drivers like Mysql2 when I have ORM?
+
+A. ORM software provides an abstraction layer that allows you to work with a database in an object-oriented way, rather than dealing with SQL directly. It abstracts away the details of SQL and the database schema, and provides a high-level interface for working with the data.
+
+However, ORM software still needs to interact with the database to perform CRUD operations (create, read, update, and delete) on the data. To do this, it uses a database driver, which is a software component that provides an interface between the ORM software and the database.
+
+The driver is responsible for connecting to the database, sending SQL queries to the database, and returning the results to the ORM software. The driver also handles details like data type mapping, error handling, and transaction management.
+
+In summary, you need a database driver along with ORM software because the ORM software by itself cannot communicate with the database. The driver provides the low-level interface that allows the ORM software to interact with the database, while the ORM software provides the high-level interface that makes it easier to work with the data in an object-oriented way.
+
+Sequelize is an ORM for Node.js that supports multiple databases, including MySQL, PostgreSQL, SQLite, and Microsoft SQL Server
+
+Q. what files are craeted when I use sequelize init?
+
+A. 
+When you use the sequelize init command in a Node.js project, Sequelize will create a config, migrations, models, and seeders folder. Here's a brief explanation of each of these folders and their significance:
+
+config: The config folder contains a configuration file (config.json) where you can specify your database credentials and other settings for your Sequelize instance. This file is used by Sequelize to connect to your database and manage your database schema.
+
+
+In easy language:
+
+Seeders are used for putting seed values i.e. some default values in the tables
+
+migrations: The migrations folder is where you can define the changes you want to make to your database schema, such as adding or modifying tables, columns, or constraints. Migrations are used to keep track of the changes you make to your database over time, so you can easily roll back to a previous version if needed.
+
+models: The models folder is where you define your database models, which represent the tables in your database. Sequelize uses these models to interact with your database and perform CRUD operations. Each model is defined as a JavaScript class that extends the sequelize.Model class.
+
+seeders: The seeders folder is where you can define the initial data you want to insert into your database. Seeders are used to populate your database with test data or pre-defined values, so you can work with a consistent data set during development.
+
+===Implementing models===
+npx sequelize model:generate --name City --attributes city:String, this command just creates jaavscript files for model and migration, but it has not synced with the database, so if we check in the database, no table is created.
+
+What are migrations? Migrations allow to make incremental changes to tables. Migration is just like git, consider a use case where a database design has to be shared between two developers in a collaborative environment, one way it to use git pull for the models file, another way is to run the migration file.
+
+Migration file will help to understand what table was updated, when it as updated etc
+
+Migrations is implemented in other frameworks like Rails too
+
+npx sequelize db:migrate will run the database migrations.
+
+Migrations usually maintain a metadata table in the database that tracks which migrations have been executed. This table typically contains information such as the name of the migration, the date and time it was executed, and any other relevant metadata. When you run the npx sequelize db:migrate command, Sequelize checks this metadata table to determine which migrations have already been executed and which ones still need to be run. This helps to ensure that each migration is executed only once and in the correct order.
+
+Difference between specifying any constraint (for example: allowNull) in models vs using it in migrations is that, at the models the constraints are at the Javascript level, so if I execute any database related command in JS, these constraints will be enforced, but these constraints will not be reflected in the table, if I see the table in MySQL, the constraints will not be enforced.
+
+Javascript level means that if allowNull is defined at the js level, then the javascript will throw an error if I try to insert null into the table, but if I don't enforce the allowNull constraint at the javascript level, the the database will throw an error, so in the former case, JS is acting as the first line of defense
+
+But when I specify the constraints at migrations, these changes will be reflected at the table level also.
+
+
+If not using sequelise-CLI, we have to define the whole model ourselves
+
+The index.js file in a Sequelize models directory is a file that exports all the defined models in the directory. This allows you to import all the models in a single line in other parts of your application, rather than having to import each model separately. 
+
+There can be different types of errors: client side errors like bad request can be handled by the middleware (middleware), some other types of errors can be handled by the controller, but if there's any business error in the models, then that error can be handled in the models folder, so using the detailed folder structure has the advantage of making it easier for error handling too. 
+
+In order to use raw SQL queries in the project (if required), I can make the corresponding functions in repository folder (not in controllers or services because services contains the business logic)
+
+Creating an index.js file for the repository will allow me to use all the repositories from a single file
+
+In a Node.js project, the routes folder is typically used to organize the different endpoints or routes that an application exposes to the outside world. The main purpose of the routes folder is to separate the logic that handles incoming requests from the rest of the application's codebase.
+
+After configuring the city controller file, all we have to do is to call the controller from a route.
+
+In RESTful API,
+1) The delete request is of the form /city/:id, so I send the params as req.params.id
+
+2) Create is POST request sends data from req.body
+
+3) read is GET /city/:id in req.params.id
+
+4) update is PATCH Request with /city/:id and id is available in req.params.id
+
+Difference between PUT and PATCH request: 
+
+The PATCH method is used to make partial updates to a resource on the server. Unlike PUT, PATCH does not replace the entire resource, but only updates the fields specified in the request body.
+
+PATCH /api/users/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com"
+}
+
+PUT:
+The PUT method is used to update or replace an entire resource on the server. When a PUT request is made to a resource, the entire resource is replaced with the new data provided in the request body.
+
+PUT /api/users/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Smith",
+  "email": "john.smith@example.com",
+  "password": "newpassword123"
+}
+
+===Important, how de wo use routing in Express JS===
+
+In Express.js, there are two main ways to define routes: using traditional routing and using express.Router().
+
+Traditional routing:
+With traditional routing, we define our routes on the main app object provided by Express. For example:
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.get('/users', (req, res) => {
+  res.send('List of users');
+});
+
+app.post('/users', (req, res) => {
+  // create a new user
+});
+In this example, we're defining three routes: a GET route for the root path /, a GET route for the /users path, and a POST route for the /users path.
+
+express.Router():
+express.Router() provides a way to create modular, mountable route handlers in Express. We can create a new router object and define our routes on that object, then mount the router on our main app object. For example:
+
+const express = require('express');
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+router.get('/users', (req, res) => {
+  res.send('List of users');
+});
+
+router.post('/users', (req, res) => {
+  // create a new user
+});
+
+app.use('/api', router);
+
+In this example, we're creating a new Router object and defining our routes on that object. We then mount the router on our app object using the app.use() method, specifying the mount path as /api. This means that all routes defined on the router will be prefixed with /api.
+
+So, TLDR: if I have to create nested routes, express.router() will be very useful.
+
+
+==Very important concept of API versioning===
+
+Let's say, I am using hackerrank's API /practice in my project. Now, if hackerrank decides to update the API due to performance issues with the old API, the need to update their API, but at the same time, they can't update the link at /practice, because many developers who would be using the older API version, their code would break. So, it is a common convention to use API versioning, so the route of APIs is generally specified as /api/v1/practice and /api/v2/practice
+
+So, the flow of code for city microservice is something like, route->controller->service->repository
+
+==Difference between request params and request query==
+
+In a Node.js and Express.js application, req.params and req.query are both used to access data from the incoming HTTP request, but they are used in different ways.
+
+req.params is used to extract route parameters from the URL path. Route parameters are dynamic values that are part of the URL path, and are defined in the route definition using a colon (:) followed by the parameter name. For example, in the route definition /users/:id, id is a route parameter. You can access this parameter in the request handler function using req.params.id.
+
+Here's an example:
+
+javascript
+Copy code
+// Route definition
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id; // Extract route parameter
+  // ...
+});
+
+// Request URL: http://example.com/users/123
+// userId: "123"
+req.query, on the other hand, is used to extract query parameters from the URL query string. Query parameters are key-value pairs that are added to the end of the URL with a question mark (?) as a separator between the URL path and the query string. Multiple parameters are separated by an ampersand (&). You can access query parameters in the request handler function using req.query.<param-name>.
+
+Here's an example:
+
+javascript
+Copy code
+// Route definition
+app.get('/search', (req, res) => {
+  const searchTerm = req.query.q; // Extract query parameter
+  // ...
+});
+
+// Request URL: http://example.com/search?q=nodejs
+// searchTerm: "nodejs"
+
+==How the folder structure is made for the app===
+
+1. services contains the backend business logic, nothing else  
+
+2.  controller is responsible for taking the request from client, sending it to service and returning the response to the client.
+
+We have made the mapping between airports and cities in the models and migrations, specifying one city can have many airports and one airport can be associated only with one city
+
+
+Seeders help to put some starting data in the tables.
+
+===Concept of syncing in Sequelize===
+
+In Sequelize, syncing two tables means creating or updating a database table based on a Sequelize model definition. This ensures that the table structure in the database matches the model definition, so that data can be properly saved and retrieved from the database.
+
+Note that it's important to be careful when syncing tables in production environments, as it can potentially result in data loss if the table structure is changed in a way that's not compatible with the existing data. It's generally recommended to use migrations to make changes to the database structure instead of relying solely on syncing.
+
+In Sequelize, "bulk insert" refers to the process of inserting multiple records into a database table at once, rather than inserting them one at a time. Sequelize provides a method for bulk inserting data called bulkCreate.
+
+bulkCreate takes an array of objects as input, with each object representing a single record to be inserted into the table. The method then generates a single SQL statement that inserts all of the records into the table at once, which can be much faster than inserting them individually.
+
+Steps to create a model: Run the command, and then modiy the models to add any constraints if any.
+
+
+===Important doubt in my mind: what is the difference between models and migrations====
+Models are used to represent database tables as JavaScript classes. Each model corresponds to a table in the database, and each instance of a model represents a row in that table. Models define the structure of the data in the database, including the attributes of each table and their data types. They also define the associations between tables, such as one-to-one, one-to-many, and many-to-many relationships.
+
+Migrations, on the other hand, are used to manage changes to the database schema over time. A migration is a JavaScript file that describes a set of changes to be applied to the database schema. Each migration file typically contains two parts: an "up" function that applies the changes, and a "down" function that rolls them back. Migrations allow you to keep track of changes to the database schema over time, and to apply those changes in a consistent and controlled manner.
+
+The main difference between models and migrations is that models represent the structure of the data in the database, while migrations represent changes to that structure over time. Models are used to define the schema of the database, while migrations are used to update that schema as needed. While models are defined once and typically do not change, migrations are created and run as needed to make changes to the schema.
+
+Purpose of using middleware is to make sure if the API contract is good or not, i.e. we are getting the body which we are expecting, so if ht ebody is sending wrong JSON data, it can be checked in the middleware (or even in the service layer), for eg. if the request body should mandatorily have cityId but client is sending request which doesn't have clientID,then the request shouldn't go to the controllers,services etc, it should be rejected much before.
+
+An API contract IS the documentation of the API. The documentation is the place where you declare how your API will behave. In this sense it the contract between you API provider and the developers that will use it around the world.
+
+Two services and repositories with almost same code are an overkill, and it leads to lots of repition in the code, so the concept of CRUD repository comes into picture.
+
+=== Setting up auth service ===
+
+Authentication and authorization:
+
+
+1) Authentication: It is a process using which we can uniquely identify users on our application. This process tells us about who the user is. The general signup/login/logout flow is used to authenticate a user.
+
+2) Authorization: It is a process using which we can identify the capabilities of a user, i.e. what a user can do on our application.
+
+Authentication always comes before authoization, we'll implement authentication first and authorization later, authorization is an easier process
+
+How to do authentication? There can be many ways like
+
+1) Mobile number based authentication: Every user wil have a different phone number, one phone number can belong to only one user
+
+2) Omniauth (OAuth): If a user can authenticate themselves on Google or Facebook or Github, we will use this authentication information.
+
+3) Using packages like passport which provide different stratgies like passport-local strategy (storing the username and password in a database), Oauth pased passport strategy and JWT based strategy (JSON (not javascript :) web tokens)
+
+4) Using custom token based authentication
+
+In this project, we will not be using any packages, we'll be building our own custom authentication service
+
+Some figures and diagrams to understand how token based authorization works:
+
+See the images at the link: https://drive.google.com/drive/folders/1fddg4F63P0cwZNVFzeZ-qZ1eZ17bLtg8?usp=share_link
+
+Some more notes about JSON web tokens: The JSON web tokens can be stored in the cookies (client side), local storage (provided by browser web storage APIs, local storage stores key-value pairs and is read-only memory, it stays in the memory forever 
+(for years and years :P), unless deleeted by the programmer explicitly), or it can be stored in the session storage (another type of memory which is provided by browser web storage APIs,which stores key value pairs, only till the duration of session)
+
+Explanation of the diagrams above: Whenever the client sends a request to the server, the server generates a unique token, and it's important to note that the server doesn't store the token anywhere, it is the responsibility of the client to send the token everytime with the request. The token is a hash value calculated on the basis of username or userId of client (never the password is used), and is decoded by the server everytime the client sends the token.
+
+JWT is called tokenless because server doesn't need to save the tokens
+
+
