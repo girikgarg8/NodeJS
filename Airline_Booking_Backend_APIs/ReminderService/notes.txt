@@ -26,3 +26,41 @@ How does cron actually work? In UNIX based systems like Linux or Mac, there is a
 
 
 The job.js file basically has the logic of the cron job, and the cron job (which runs after every 2 minutes)  which we have defined inside the job.js file is to get details of those emails which have status as 'pending' (yet to be sent), and to schedult these emails to be sent using the email service.
+
+== Introduction to message queues===
+
+Let's see why I need a message queue in my project: The booking service has to communicate with the reminder service, every time a new booking is made, one way for the communication is using HTTP requests like GET or POST etc (there's one obvious disadvantage with using HTTP requests though, if I am ), but another alternative is using message queues, as even if the request is delayed by 1-2 minutes, it won't make much of a difference.
+
+This question was asked in Shopee's interview (a Singapore based startup):
+
+Let's say I have a service1 which has a bottleneck of 100 requests per second, and a second service2 which has a bottleneck of 20 requests per second, so in this case how would we make the design?
+
+Answer is using message queues, The service1 can be a publisher to the message queue and service2 can be a subscriber to the message queue.
+
+[Service 1 (100qps) Publisher]---->message queue [msg1,msg2,msg3,...msg100]---> [Service2 (20 qps)]
+
+The advantage of this approach is that service1 doesn't have to downscale to downscale to be at pace with service2, nor does service2 have to upscale to be at pace with service1
+
+If the business logic requires, we can have a message queue for the response of service2 to feed into service1, something like [Service2 (Publisher)]---->message queue [msgs]--->[Service1 (subscriber)]
+
+Real life example of such a service: working of codeforces online judge: it takes all the submission into the queue (because compiling each users code and comparing it to the author's code takes time), and then returns the reponse back to the users 
+
+We'll be using Rabit MQ, which is a message broker, it's quite commonly used 
+
+Sockets are used for real time communication, like if I am using whatsapp, I don't need to refresh the app again and again. it's a persistent HTTP method
+
+We'll be using a package called amqplib, which is Nodejs client package for using rabbitmq, client package means that it is helping us to connect to RabitMQ, but we need to install RabitMQ separately
+
+Some defintions:
+
+1) Message broker: A message broker is a middleware that manages different queues between different applications. (for example: rabbitmq is a message broker)
+
+2) Channel refers to a virtual connection between the application and message broker 
+
+3) assertExchange functions helps me route the message between different queues (there could be multiple queues between two applications, and assertExchange function helps me route between these different queues) : even if I don't use assertExchange function, the message broker will still work.
+
+4) A connection is a TCP connection between the client and the RabbitMQ broker. It is the physical connection that allows the client to communicate with the broker. A connection is established when the client connects to the broker and is closed when the client disconnects from the broker.
+
+Diagrammtic explanation of the code available here: https://drive.google.com/file/d/1iChh9P3Q-w4GQAD8dUzcXuiqddjq7Htq/view?usp=share_link, in the code EXCHANGE_NAME is actually specifying the name of exchange distributer, there's one key term in the diagram which is the exchange distributer (it's a fancy term for message broker)
+
+Read this execellent blog: https://www.cloudamqp.com/blog/part1-rabbitmq-for-beginners-what-is-rabbitmq.html, if you want to get even more details

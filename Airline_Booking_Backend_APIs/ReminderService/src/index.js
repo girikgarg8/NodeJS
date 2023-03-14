@@ -11,7 +11,9 @@ const jobs=require('./utils/job')
 
 const {sendBasicEmail}=require('./services/email-service')
 
-const setupAndStartServer = () => {
+const {createChannel}=require('./utils/messageQueue')
+
+const setupAndStartServer = async () => {
     const app = express();
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
@@ -19,6 +21,8 @@ const setupAndStartServer = () => {
     app.listen(PORT, () => {
         console.log(`Server started at port ${PORT}`);              
     });
+
+    //const channel=await createChannel();
 
     app.post('/api/v1/tickets',TicketController.create)
     jobs();
