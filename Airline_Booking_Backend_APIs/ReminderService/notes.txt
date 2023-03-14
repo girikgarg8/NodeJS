@@ -57,10 +57,18 @@ Some defintions:
 
 2) Channel refers to a virtual connection between the application and message broker 
 
-3) assertExchange functions helps me route the message between different queues (there could be multiple queues between two applications, and assertExchange function helps me route between these different queues) : even if I don't use assertExchange function, the message broker will still work.
+3) assertExchange functions helps me create the particular exchange in the rabbitmq broker if it doesn't exist, similary assertQueue helps to create the queue if it doesn't exist (there could be multiple queues between two applications) : even if I don't use assertExchange function, the message broker will still work.
 
 4) A connection is a TCP connection between the client and the RabbitMQ broker. It is the physical connection that allows the client to communicate with the broker. A connection is established when the client connects to the broker and is closed when the client disconnects from the broker.
 
 Diagrammtic explanation of the code available here: https://drive.google.com/file/d/1iChh9P3Q-w4GQAD8dUzcXuiqddjq7Htq/view?usp=share_link, in the code EXCHANGE_NAME is actually specifying the name of exchange distributer, there's one key term in the diagram which is the exchange distributer (it's a fancy term for message broker)
 
 Read this execellent blog: https://www.cloudamqp.com/blog/part1-rabbitmq-for-beginners-what-is-rabbitmq.html, if you want to get even more details
+
+
+Use of binding key in rabbitmq: The exchange distributor doesn't use the names of queues, it instead uses these "binding keys" to refer to the queues.
+
+We need to give a name to the exchange distributor because we can have multiple exchange distributors
+
+==Another possible alternative could have been to use Kafka for managing the message queues, but for the scale of our project, RabitMQ is fine, even RabitMQ is used by many startups==
+

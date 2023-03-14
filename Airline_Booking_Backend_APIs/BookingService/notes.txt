@@ -15,3 +15,6 @@ Firstly, why is this connection required? There are atleast two reasons,
 2) Secondly, the frontend may always send 0 as the totalCost if a hacker comes to know about the payload, if the backend doesn't have any validation, it will be a very bad design
 
 As I have to make HTTP requests (GET,POST) etc from one microservice (booking service) to  another microservice (flights microservice), I can use the axios library as it provides a convenient platform to make different HTTP requests
+
+JSON.stringify() is a built-in method in JavaScript that converts a JavaScript object or value to a JSON string. The method takes an object as input and returns a string that represents the JSON data of the input object.
+

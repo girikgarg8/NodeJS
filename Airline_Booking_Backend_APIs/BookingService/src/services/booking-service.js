@@ -1,7 +1,8 @@
 const {BookingRepository}=require('../repository/index')
 const { FLIGHT_SERVICE_PATH }=require('../config/serverConfig');
 const { ServiceError } = require('../utils/errors');
-
+const {createChannel,publishMessage}=require('../utils/messageQueue');
+const {REMINDER_BINDING_KEY,EMAIL_ID}=require('../config/serverConfig');
 const axios=require('axios');
 class BookingService{
     constructor(){
@@ -30,13 +31,25 @@ class BookingService{
             await axios.patch(updatedFlightRequestURL,{totalSeats:flightData.totalSeats-booking.noOfSeats});
 
             const finalBooking= this.bookingRepository.update(booking.id,{status: "Booked"})
+
+            const channel=await createChannel();
+            const payload={
+                data:{
+                   mailFrom: EMAIL_ID,
+                   mailTo: EMAIL_ID,
+                   mailSubject: 'Congratulations! Your flight has been confirmed',
+                   text: `Hello there! Your seat(s) have been confirmed. We wish you a safe journey!` ,
+                },
+                service:'SEND_BASIC_EMAIL'
+          };
+            publishMessage(channel,REMINDER_BINDING_KEY,JSON.stringify(payload));
             return finalBooking;
         }
         catch(error){
             if (error.name=='RepositoryError' || error.name=='ValidationError'){
                 throw error;
             }
-            throw new ServiceError();
+            throw error;
         }
     }
 

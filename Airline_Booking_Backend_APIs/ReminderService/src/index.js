@@ -11,7 +11,11 @@ const jobs=require('./utils/job')
 
 const {sendBasicEmail}=require('./services/email-service')
 
-const {createChannel}=require('./utils/messageQueue')
+const {createChannel,subscribeMessage}=require('./utils/messageQueue')
+
+const {REMINDER_BINDING_KEY}=require('./config/serverConfig');
+
+const EmailService=require('./services/email-service')
 
 const setupAndStartServer = async () => {
     const app = express();
@@ -22,6 +26,8 @@ const setupAndStartServer = async () => {
         console.log(`Server started at port ${PORT}`);              
     });
 
+    const channel=await createChannel();
+    subscribeMessage(channel,EmailService.subscribeEvents,REMINDER_BINDING_KEY);
     //const channel=await createChannel();
 
     app.post('/api/v1/tickets',TicketController.create)
