@@ -6,6 +6,11 @@ const bookingController=new BookingController();
 
 const router=express.Router();
 
+router.get('/info',(req,res)=>{
+	return res.json({
+		message: 'Response from routes'
+	})
+})
 router.post('/bookings',bookingController.create);
 router.post('/publish',bookingController.sendMessageToQueue);
 

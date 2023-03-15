@@ -1,0 +1,24 @@
+At big scale companies, usually there's something called middlend which sits in between the frontend and backend
+
+FRONTEND----MIDDLEND----backend
+
+--We need an intermediate layer between the client side and the microservices
+--Using this middle end, the client sends request, and we will be able to make decisions that which microseruce should actually respond to that request
+-- We can do message validation, response transformation and rate limiting
+-- Explanation of previous point: response transformation could mean that different response could be sent depending upon whether the request is coming from web or mobile), rate limiting is something which we want to do on the API gateway because services are for business logic, it's not the responsibility of services
+-- API gateway acts as a reverse proxy. (Read this beautiful article: https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)
+-- We try to prepare an API gateway which acts as this middle end.
+
+--Load balancer, basically routes the requests to one of the API gateways, so load balancer!=API gateway
+
+We have used Morgan logger in this project, morgan helps me to do logging, for example, if I send GET or POST requests through postman to the app, morgan will help me log these requests.
+
+We'll be using a package called http-proxy-middleware to setup the reverse proxy, what this package can offer is the ability to proxy localhost:3000/api/foo/bar requests to http://www.example.org/api/foo/bar 
+
+What is the need of using http-proxy-middleware in our project? Let's say there are different microservices running at different ports in our app, and we don't want the client to everytime specify different ports while sending requests, so we can use http-proxy for all these requests.
+
+For using rate limiter functions, we'll be using a package called express-rate-limit
+
+If I want that before a request hits the API gateway, requesting for bookings, should be authenticated first, I can set up an athorization middleware in the API gateway
+
+So I can make an axios request to authorization service
