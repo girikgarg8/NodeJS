@@ -1,0 +1,14 @@
+What is cloud? And why do we require cloud machines, why not only local machines?
+
+
+Cloud refers to remote machines which provide on-demand access to respurces on pay-as-you-go basis. 
+Using local machines isn't feasible because our local machine can't handle large number of requests,also local machine doesn't provide us the requsiuste security functions. 
+
+Amazon has data-centers at different locations worldwide, and these centers have the remote machines
+
+EC2==> Virtual servers in cloud==? EC2 helps to get me an instance (instance means a machine on the cloud ) where we can deploy our application
+
+
+In order to communicate with internal instances, we can setup a VPC (virtual private connection)
+
+Left at 19:02
