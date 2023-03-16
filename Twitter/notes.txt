@@ -97,7 +97,96 @@ Some awesome stuffs about NoSQL database:
 2) NoSQL databases are easy to start with, in a project
 3) The structure of the table need not to be known at the beginning of the project, it can be updated on the fly
 
-1:28:24
+Another big advantage of using MongoDB is that I can use one schema inside another schema, in SQL databases, to get same functionality I have to use joins in tables.
+
+Yes, you can use one schema inside another schema in MongoDB using the concept of embedding. In MongoDB, you can embed one schema (let's call it the "child schema") inside another schema (let's call it the "parent schema") by defining the child schema as a field in the parent schema.
+
+For example, suppose you have a parent schema called "User" and a child schema called "Address". You can embed the Address schema inside the User schema by defining the Address schema as a field in the User schema:
+
+const addressSchema = new mongoose.Schema({
+  street: String,
+  city: String,
+  state: String,
+  zip: String
+});
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+  address: addressSchema
+});
 
 
+In the above example, the Address schema is defined as a field in the User schema using the address: addressSchema syntax. This means that each user document will contain an embedded address document.
 
+
+The save() function is used to save the document to the database. Using this function, new documents can be added to the database. (In terms of relational databases, I can think of save() as adding a new row to the table)
+
+===Continuing MongoDB===
+
+A small optimization that can be done while working on MongoDB, is using lean() function.
+
+What exactly is this function and why is it needed? Need: Whenever I exceute a mongodb query, it returns me a mongoose document. 
+Documents are much heavier than vanilla JavaScript objects, because they have a lot of internal state for change tracking.
+But I can directly return a javascript object by using the lean function(), it helps me in performance improvement for executing the queries. 
+
+
+In SQL, pagination refers to the process of breaking up a large set of query results into smaller, more manageable pages. This is useful when you are working with a large dataset and want to display it to users in a way that is easy to read and navigate.
+
+Pagination typically involves two steps: first, retrieving a subset of the results based on a specified page size and page number, and second, displaying the subset of results to the user.
+
+Here's an example of how you can implement pagination in SQL using the LIMIT and OFFSET clauses:
+
+Suppose you have a table called employees that contains a list of employee records, and you want to display the records in groups of 10 employees per page. Here's how you can do it:
+
+SELECT * FROM employees
+LIMIT 10 OFFSET 0; -- retrieves first 10 records
+
+SELECT * FROM employees
+LIMIT 10 OFFSET 10; -- retrieves second 10 records
+
+SELECT * FROM employees
+LIMIT 10 OFFSET 20; -- retrieves third 10 records
+In this example, the LIMIT clause specifies the maximum number of records to retrieve, and the OFFSET clause specifies the starting point for retrieving records. By changing the OFFSET value, you can retrieve different subsets of records.
+
+When you display the records to the user, you can provide links or buttons to navigate between the pages, based on the total number of records and the page size.
+
+Pagination is commonly used in web applications that display lists of data to users, such as search results, product listings, or news articles. By breaking up the results into smaller, more manageable pages, you can provide a better user experience and improve the performance of your application.
+
+Performing pagination in the database query has several advantages over fetching all the rows from the table and then doing pagination in the frontend app:
+
+Faster performance: If the table has a large number of rows, fetching all the rows from the database can be a time-consuming and resource-intensive process. Performing pagination in the database query ensures that only the necessary rows are fetched, reducing the amount of data that needs to be transferred over the network and improving the overall performance of the application.
+
+Reduced network traffic: By fetching only the necessary rows from the database, performing pagination in the query reduces the amount of data that needs to be transferred over the network. This can be especially beneficial in cases where the application is used over a slow or unreliable network connection.
+
+Lower memory usage: Fetching a large number of rows from the database and holding them in memory can be memory-intensive and can cause performance issues. Performing pagination in the database query ensures that only the necessary rows are fetched, reducing the amount of memory used by the application.
+
+Easier to maintain: If the pagination logic is implemented in the database query, it is easier to modify or update the pagination behavior in the future. On the other hand, if the pagination logic is implemented in the frontend app, any changes to the pagination behavior would require modifying the application code.
+
+==> Similarly, now we are going to do pagination in MongoDB database, for this I use two functions named skip and limit in javascript===
+
+In MongoDB, a virtual is a computed property that is not stored in the database but can be accessed as if it were a regular field. Virtual fields are defined in the schema and are computed based on other fields or data in the document.
+
+===>What are virtuals in MongoDB?
+
+Virtual fields can be useful in situations where you need to compute a value on the fly based on data stored in the database. For example, you might want to calculate the total price of an order based on the prices of individual items in the order.
+
+To define a virtual field in a MongoDB schema, you can use the virtual method provided by Mongoose, the popular object modeling tool for Node.js. Here's an example:
+
+const mongoose = require('mongoose');
+
+const OrderSchema = new mongoose.Schema({
+  items: [{
+    name: String,
+    price: Number
+  }]
+});
+
+OrderSchema.virtual('total').get(function() {
+  return this.items.reduce((total, item) => total + item.price, 0);
+});
+
+const Order = mongoose.model('Order', OrderSchema);
+
+31:20
