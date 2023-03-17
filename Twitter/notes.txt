@@ -189,4 +189,18 @@ OrderSchema.virtual('total').get(function() {
 
 const Order = mongoose.model('Order', OrderSchema);
 
-31:20
+What is database indexing? Database indexing is the technique by which we can optimize the result of a DBMS query, by reducing the number of disk accesses required.
+
+Indexing is supported in both relational and non-relational databases
+
+The official documentation of MongoDB says: 'Without indexes, MongoDB must perform a collection scan i.e. scan every dcuement in a collection, to select those documents that match the query statement'
+
+Another example of virrtuals is that weith each document, I can use 'id', even though the 'id' attrbiute is not present inside the document.
+
+===> What is a trigger, and how do we use triggers in MongoDB?
+
+Formal definition of trigger: A trigger is a stored procedure in database which automatically invokes whenever a special event in the database occurs.
+
+Use case of trigger in the previous project of Airplane booking: I fired a trigger each time the details of a user were entered, in order to hash the password using bcryptjs (Triggers are known as hooks in sequelize)
+
+51:57
