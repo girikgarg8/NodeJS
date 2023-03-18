@@ -203,4 +203,6 @@ Formal definition of trigger: A trigger is a stored procedure in database which 
 
 Use case of trigger in the previous project of Airplane booking: I fired a trigger each time the details of a user were entered, in order to hash the password using bcryptjs (Triggers are known as hooks in sequelize)
 
-51:57
+Internally, indexes are special data structures thata store a small portion of the collection's data set in an easy to traverse form.(example: B tree or B+ tree)
+
+57:42
