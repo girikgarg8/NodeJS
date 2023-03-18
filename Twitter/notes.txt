@@ -230,3 +230,12 @@ Logic for adding hashtags in tweets:
 1.  Bulkcreate tags in mongoose
 2. Filter title of hashtag based on multiple tags (if the user passes 3 hashtags in the tweet, and 2 of these already exist in the database,I will only be creating that tag which doesn't exist in the database)
 3. How to add tweet ID inside all the hastags
+
+
+Aggregation pipelines in MongoDB: Firstly, what are aggregation functions in SQL or ny other database? This function performs calculations one or more values and returns a single value.
+
+Now, what are aggregation pipelines? Aggregation pipelines can have one or more "stages". The order of these stages are important. Each stage acts upon the results of the previous stage.
+
+===Adding logic for tweets===
+
+24:00

@@ -1,8 +1,9 @@
-const {TweetRepository}=require('../repository/index')
+const { TweetRepository, HashTagRepository }=require('../repository/index');
 
 class TweetService{
     constructor(){
         this.tweetRepository=new TweetRepository();
+        this.hashtagRepository=new HashTagRepository();
     }
     async create(data){
         const content=data.content;
