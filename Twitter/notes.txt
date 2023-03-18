@@ -220,3 +220,13 @@ Java coding is lot of annotation based and dependency injection based
 For storing images and videos, we'll be using S3 static storage.
 
 For authorization, we would be using  passport js library, we won't be coding the authorization part ourselves (unlike the airline booking project)
+
+As the hashtag schema can grow very big in size, we'll try to index it for faster query answer retrieval.
+
+For extracting the hashtags from tweet, I'll be using regular expressions.
+
+Logic for adding hashtags in tweets:
+
+1.  Bulkcreate tags in mongoose
+2. Filter title of hashtag based on multiple tags (if the user passes 3 hashtags in the tweet, and 2 of these already exist in the database,I will only be creating that tag which doesn't exist in the database)
+3. How to add tweet ID inside all the hastags
