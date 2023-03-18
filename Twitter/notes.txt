@@ -205,4 +205,18 @@ Use case of trigger in the previous project of Airplane booking: I fired a trigg
 
 Internally, indexes are special data structures thata store a small portion of the collection's data set in an easy to traverse form.(example: B tree or B+ tree)
 
-57:42
+Choice of index depends upon the usecase.
+
+There's no concept of migrations in MongoDB, because we don't care about the structure of the table.
+
+Unit tetsing and integrating testing is exepceted from backend engineer, QA engineers are different in each company
+
+The basics in each testing framework are same: concepts of mocks.( Concepts are same in each language, just the libraries are different)
+
+Java coding is lot of annotation based and dependency injection based
+
+===Setting up the projects and requirements===
+
+For storing images and videos, we'll be using S3 static storage.
+
+For authorization, we would be using  passport js library, we won't be coding the authorization part ourselves (unlike the airline booking project)
