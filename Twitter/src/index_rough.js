@@ -40,3 +40,14 @@
 //         tweets: []
 //     }
 // ])
+
+// let repo=new HashTagRepository();
+    // let response=await repo.findByName(['Excited','Trend'])
+    // console.log(response)
+    // response=response.map((tags)=> tags.title)
+    // console.log(response)
+
+// let service = new TweetService();
+// const tweet = await service.create({
+//     content: 'I am really #excited to start a new job #newlife #coding'
+// })
