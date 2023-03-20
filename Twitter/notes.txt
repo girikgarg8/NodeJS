@@ -246,6 +246,18 @@ The map() method is used to transform the elements of an array, whereas the forE
 
 We'll now refactor the CommonJS code into ES6 code, for that I will specify type as module in the package.json file, and make the necessary code changes for import and export
 
-1:46:15 Needto test the routes with postman
+Added logic for tweets
+
+===Likes and comments===
+
+If the backend code is not API driven, and at a later stage, I decide to make a mobile app, then the backend code needs a lot of refactoring, because in mobile app, because we need to process JSON responses too in the mobile app 
+
+API driven development means practicing of desinging and building AIs first, thren creating the rest of an application around them.
+
+Very important aspect: Like can be done on a comment as well as on a tweet. So, I will make the database design of Like model as something like:
+
+https://dev.to/chubbystrings/dynamic-model-referencing-with-mongoose-41jf#:~:text=The%20refPath%20option%20is%20a%20more%20sophisticated%20alternative,configure%20what%20model%20Mongoose%20uses%20for%20each%20doc. Read this article, it explains about dynamic model referencing
+
+33:38 Adding likes and comments
 
 
