@@ -246,6 +246,6 @@ The map() method is used to transform the elements of an array, whereas the forE
 
 We'll now refactor the CommonJS code into ES6 code, for that I will specify type as module in the package.json file, and make the necessary code changes for import and export
 
-1:00:24
+1:46:15 Needto test the routes with postman
 
 

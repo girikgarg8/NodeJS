@@ -1,4 +1,4 @@
-import TweetService from "../services/tweet-service";
+import TweetService from "../services/tweet-service.js";
 
 const tweetService=new TweetService();
 
