@@ -20,5 +20,6 @@ app.listen(3000, async () => {
     const tweetRepo=new TweetRepository();
     const tweets=await tweetRepo.getAll(0,10);
     const likeService=new LikeService();
+    console.log(tweets,users)
     await likeService.toggleLike(tweets[0].id,'Tweet',users[0].id)
 }) 
