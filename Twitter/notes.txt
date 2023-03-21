@@ -258,6 +258,4 @@ Very important aspect: Like can be done on a comment as well as on a tweet. So, 
 
 https://dev.to/chubbystrings/dynamic-model-referencing-with-mongoose-41jf#:~:text=The%20refPath%20option%20is%20a%20more%20sophisticated%20alternative,configure%20what%20model%20Mongoose%20uses%20for%20each%20doc. Read this article, it explains about dynamic model referencing
 
-33:38 Adding likes and comments
-
-
+1:58:05 Error pending
