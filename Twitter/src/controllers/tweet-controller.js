@@ -19,9 +19,5 @@ export const createTweet=async (req,res)=>{
             data: {},
             err:error
         })
-
-
     }
-
-
 }
