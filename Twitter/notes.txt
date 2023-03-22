@@ -258,4 +258,22 @@ Very important aspect: Like can be done on a comment as well as on a tweet. So, 
 
 https://dev.to/chubbystrings/dynamic-model-referencing-with-mongoose-41jf#:~:text=The%20refPath%20option%20is%20a%20more%20sophisticated%20alternative,configure%20what%20model%20Mongoose%20uses%20for%20each%20doc. Read this article, it explains about dynamic model referencing
 
-1:58:05 Error pending
+One of the errors which we encountered during the project was, due to treating runnables as promises while using Mongoose and MongoDB, all promises are thenables, but not all thenables are promises. See this article: https://javascript.plainenglish.io/whats-the-difference-between-a-thenable-and-a-promise-74d697bc9c79
+
+Read this article: https://javascript.plainenglish.io/the-benefit-of-the-thenable-object-in-javascript-78107b697211, beautifully explained
+
+===Adding comments model===
+
+Agenda pending
+
+1- Comments and Likes
+2- Passport user authorization
+3- Misc and S3 image upload
+4- Testing of app
+5- Web sockets-chat app 1
+6- Chat app 2
+7- Docker|deployment| CICD
+8- Grpc-> 2 services| client, server| what is protobuf, and why didn't we use GRPC in the projects till now
+9- Redis caching
+10- Extra (How to give a high level system design interview, iterator generator in javascript)
+
