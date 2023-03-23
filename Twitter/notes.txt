@@ -277,3 +277,5 @@ Agenda pending
 9- Redis caching
 10- Extra (How to give a high level system design interview, iterator generator in javascript)
 
+Left at 1:03:11 TODO: implement comment controllers
+
