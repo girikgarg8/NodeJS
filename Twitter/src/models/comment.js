@@ -22,7 +22,7 @@ const commentSchema = new mongoose.Schema({
     //in simple language, this database schema has two properties: one is what object is the comment/like on (out of enum: Tweet or Comment) and the second property commentable/likable denotes which particular ID of tweet or comment has been liked or commented on
     ,comments:[
         {
-            type:Mongoose.Schema.Types.ObjectId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:'Comment'
         }
     ]

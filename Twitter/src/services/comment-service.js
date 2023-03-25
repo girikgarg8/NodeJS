@@ -1,5 +1,5 @@
 import Tweet from '../models/tweet.js';
-import {CommentRepository,TweetRepository} from '../repository/comment-repository.js'
+import {CommentRepository,TweetRepository} from '../repository/index.js'
 
 class CommentService {
     constructor(){
@@ -8,7 +8,6 @@ class CommentService {
     }
     async createComment(modelId,modelType,userId,content){
         if (modelType=='Tweet'){
-            console.log("Inside model type")
             var commentable=await this.tweetRepository.get(modelId);
         }
         else if (modelType=='Comment'){
