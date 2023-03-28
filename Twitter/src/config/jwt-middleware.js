@@ -1,5 +1,5 @@
 import JWT from 'passport-jwt'
-import User from '../models/user';
+import User from '../models/user.js';
 
 const JwtStrategy=JWT.Strategy;
 const ExtractJwt=JWT.ExtractJwt;
