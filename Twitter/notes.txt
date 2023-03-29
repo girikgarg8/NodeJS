@@ -278,10 +278,11 @@ Agenda pending
 10- Extra (How to give a high level system design interview, iterator generator in javascript)
 
 
-Left at 1:21:17 (passport user authorization)
+Left at 1:22:08 (passport user authorization)
 
 ===Notes from adding authentication===
 
 Wew are going to use passport-jwt (which works on JSON web tokens) in our project for authenticating the user.
 
 There are two separate packages which I need for the authentication: passport-jwt is specific package which tells about the speciif strategy to be used, and the passport package which is the general package 
+
