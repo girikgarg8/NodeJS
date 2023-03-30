@@ -267,7 +267,7 @@ Read this article: https://javascript.plainenglish.io/the-benefit-of-the-thenabl
 Agenda pending
 
 1- Comments and Likes (Done)
-2- Passport user authorization
+2- Passport user authorization (Done)
 3- Misc and S3 image upload
 4- Testing of app
 5- Web sockets-chat app 1
@@ -286,3 +286,23 @@ Wew are going to use passport-jwt (which works on JSON web tokens) in our projec
 
 There are two separate packages which I need for the authentication: passport-jwt is specific package which tells about the speciif strategy to be used, and the passport package which is the general package 
 
+How would I implement an email based verification system, where the user gets an email with a link to veridy their email?
+
+/*
+Store a user->unique_id->createdAt mapping in database
+
+Send email to user with the email mywebsite.com/verify/:unique_id (sonething like /verify/iodewiohf)
+Make a db call to ascertain whether unique ID exists in the db, and also checked created at column in the database, if current time-createdAt is greater than 30 minutes, return an invalid response saying 'token expired'
+*/
+
+==Handling images in the project===
+
+1) If working on a small project, we can store the data in our project only, but is inefficient
+2) Storing some binary data in database, but is also heavy operation on database
+
+So, the best approach is to use static storage (like Amazon S3, Cloudinary image ID)
+
+So the approach is something like:
+
+1) We create a REST API, that will upload the data to S3
+2) S3 will give us a publically accessible link, which can be stored in the database
