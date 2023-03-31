@@ -306,3 +306,9 @@ So the approach is something like:
 
 1) We create a REST API, that will upload the data to S3
 2) S3 will give us a publically accessible link, which can be stored in the database
+
+Another use case of static storage like Amazon S3 is: FAQ pages
+
+FAQ Pages can either be placed on the frontend, if they are static in nature (don't change so much)
+But if there's a use case where FAQs can change with time (dynamic), and let's say we are on a mobile app. Then changing the FAQs would require to make a new release, which is a quite big task in itself. So, we can use static storage for storing the FAQs
+
