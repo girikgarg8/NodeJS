@@ -312,3 +312,53 @@ Another use case of static storage like Amazon S3 is: FAQ pages
 FAQ Pages can either be placed on the frontend, if they are static in nature (don't change so much)
 But if there's a use case where FAQs can change with time (dynamic), and let's say we are on a mobile app. Then changing the FAQs would require to make a new release, which is a quite big task in itself. So, we can use static storage for storing the FAQs
 
+We can store images, videos, pdfs etc (static data) on S3 (Simple storage service), because storing them on frontend/backend makes our system slow.
+
+Like an image can be 30MB, and it's not feasible to send 30 MB data through REST API. So, instead we csn store on static storage, and store the link in the service.
+
+We'll be using a package called multer, which is a middleware which handles any file uploads.
+
+Stopped at 37:31 Image upload video (Stopped because no access to aws)
+
+I installed another package aws-sdk for this project.
+
+When I go to Amazon AWS console, I have an option of choosing the visbility of static storage, as for this project, I want the tatic storage content to be visible, so I can go ahead and choose the settings as public.
+
+===Testing in NodeJS===
+
+First of all, introduction to some terms:
+
+1) Manual testing: For example, if the frontend is to e tested, then a tester will manually check all the components and features on the frontend
+
+2) Automation testing: We write code to test code.
+
+3) QA: (Quality assurance folks): Usually perform black box manual testing. Their pay is usually less than SDEs.
+
+4) SDET (Software development engineer in test):  Usually perform white box testing using automation testing. Are usually at par with SDEs in any organization
+
+Why should SDEs write tests when we have SDETs or QAs in the company? Suppose that I am working in the payment team, and the authorization team makes a change in their code, (which leads to downtime), as an SDE I should be confident that my microservice is working fine. 
+
+SDET will test the code written by SDE only when the SDE has thoroughly tested their code and the code has passed the unit tests.
+SDETs use testing frameworks like Selenium in order to do testing for code. As a SDE, we have to write many test cases.
+
+For Javascript, we can use a package called JEST to write unit tests, or in other words, perform unit testing.
+
+Unit testing: means testing a small unit or piece of code...like in the userService, testing if the getUserByEmail functionality works
+
+In startups, they usually don't write tests, because startups need to ship features fast.
+
+==One of the core philosophies of any testing framework is that===
+
+Let's say I am testing the getUserByEmail function in user-service, and let's the function getUserByEmail calls another function, I call another function userRepository.findBy, so I am going to assume the behavior of userRepository.findBy function (Either it works correctly or not), if at all needed I can write separate unit test cases for userRepository.findBy function. So the point being, that while writing the test s for a particular unit, I mimic the behavior of any other units within it, or in technical terms, I can say that I mock the behavior of the functions.
+
+You're responsible for testing what you are writing, not what you use as an abstraction.(The principle of testing)
+
+In our project structure, we have a separate folder for tests and src, because we may not want to push tests to be pushed to production.
+
+By default, JEST expects the modules to be required in commonJS module system, if I want to do the imports in ES6 module system, I need to separately configure a jest.config.js file
+
+For the dummy-service.js, as discussed, we don't write test code for the code that we'll be using, so I will be mocking the behavior of helper function in jest.
+
+We can also get coverage reports to find out how much percentage of our code is being tested.
+
+There's also another testing framework in Javascript: Mocha (pronounced as 'Mauka')
