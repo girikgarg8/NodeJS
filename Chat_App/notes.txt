@@ -1,0 +1,86 @@
+==I am using sockets.io javascript library to create a chat application==
+
+1) Socket.io provides bidirectional and low latency communication
+
+First of all, understanding what are persistent and non-persistent HTTP connections?
+
+HTTP (Hypertext Transfer Protocol) is a stateless protocol, meaning that every request and response is treated as an independent transaction, with no knowledge of any previous interactions between the client and the server. However, HTTP also provides the ability to create persistent connections, which can improve performance by allowing multiple requests to be sent and received over a single connection.
+
+Persistent connections are those connections between the client and server that stay open after a request has been sent and a response has been received, which means that multiple requests and responses can be sent over the same connection. These connections are also known as keep-alive connections because they keep the connection "alive" between the client and server.
+
+In contrast, non-persistent connections are those connections that are closed after each request and response has been sent and received. This means that a new connection must be established for each new request, which can slow down performance due to the overhead of establishing a new connection for each request.
+
+A keep-alive header is a header that is included in an HTTP request or response to indicate that the connection should be kept open after the current transaction is completed. The header includes a value that specifies the maximum amount of time that the connection should be kept open, after which the connection will be closed if no new requests are made.
+
+For example, the following is an example of a keep-alive header in an HTTP response:
+
+
+HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Type: text/html
+Content-Length: 12345
+This header indicates that the server will keep the connection open after the response is sent, and the client can send additional requests over the same connection if desired. The Connection header specifies the value keep-alive to indicate that the connection should be kept open, and the Content-Length header specifies the length of the response content.
+
+In contrast, the following is an example of a non-persistent connection, where the connection is closed after each request and response:
+
+
+GET /index.html HTTP/1.1
+Host: example.com
+In this example, the client sends a request for the index.html page to the server at example.com. After the server sends the response, the connection is closed, and the client would need to establish a new connection to make another request.
+
+===Now the thing is that though persistent HTTP connections were better than their non-persistent ones, still it couldn't solve some problems, like one of them being: that server can't initiate request with the client, so for this reason websockets were introduced===
+
+Websockets provide for two way communication, and we don't need to poll the server for reply (What that means is: we don't need for the server to wait for saying, 'Yes, send me the request', it's like Whatsapp, even if I am offline or chatting with another friend, an other friend can still send me a message)
+
+Websockets, kind of, provides for a communication protocol between the server and client.
+
+So, websockets actually provide for full duplex communication: meaning that both the server and client can communicate simultaneously. 
+
+Websockets are also based on TCP, so they are reliable communications.
+
+==So, in NodeJS,we have a library called Socket.io which helps me to use WebSockets API (Websocket is a protocol whereas socket.io is a package which uses socket) (for diferent frameworks, it can be different) ==
+
+===Long polling in websockets===
+See this video to understand the difference between short polling, long polling and websockets: https://www.youtube.com/watch?v=ZBM28ZPlin8
+
+So, basically, summarizing the differnces: 
+
+1) short polling: let's say the client requests for some resource from server, and the server doesn't have that resource ready, so the server will send an empty response back to the client, and the client will repeatedly send requests to the server (client will continuously poll the server) till the time the server has that resource ready. When the client polls the server again and again, each time, it will make a new connection with the server. This is a bad design, because each time making a new connection, will lead to lot of overhead.
+
+2) long-polling: let's say the client requests for some resource from server, and the server doesn't have that resource ready,the server will keep the connection alive, and send the resource when it is available. The good part of the design is that overhead is not incurred in making the connection again and again.
+
+3) Websockets: it is kind of implementation of long polling, here a pipeline is setup between the server and client, and the server/client can send messages thorugh this pipeline
+
+Sockets are based on event driven architecture. What is event based architecture? Explained below
+Event-based architecture is an approach to software design where the system reacts to events, which are occurrences or changes in the system or its environment. In an event-based system, events are the primary means of communication and coordination between different components or modules.
+
+In simple words, an event is like a signal or notification that something has happened or changed in the system, and other parts of the system can react to it if they are interested. Events can be triggered by user actions, system events, data changes, or external inputs, and they can be processed by event handlers or subscribers.
+
+For example, consider an e-commerce website where users can buy products. When a user adds a product to their cart, an event is triggered indicating that the cart has been updated. This event can be processed by other components of the system, such as the inventory system, which can check if the product is in stock and update the inventory accordingly. Similarly, the payment system can be notified when the user completes the checkout process, and it can process the payment and update the order status.
+
+Here, in this project, I am doing server side rendering because I am setting up the static server side rendering of socket.IO with express, in case my application has a requirement of doing client side rendering using React, I can setup the library accordingly.
+
+Syntax of socket.emit:
+The socket.emit() method is used to send an event from the client to the server or from the server to a specific client.
+
+The syntax for socket.emit() in Node.js using Socket.IO is as follows:
+
+// Emit an event from the client to the server
+socket.emit(eventName, data, callback);
+
+// Emit an event from the server to a specific client
+io.to(socketId).emit(eventName, data);
+
+Here's a breakdown of each parameter:
+
+eventName: A string that represents the name of the event being emitted.
+data: Optional data that can be sent along with the event. This can be any valid JSON serializable data type such as a string, number, object, or array.
+callback: Optional callback function that can be used to handle a response from the server.
+socketId: The unique identifier of the client that the server wants to send the event to. This parameter is only used when emitting an event from the server to a specific client.
+
+Note that the socket.emit() method can be called from either the client or the server, depending on the direction of the event. When called from the client, the socket object is obtained from the io() function, which initializes the connection to the server. When called from the server, the socket object is obtained from the connection event listener callback.
+
+Architecture of the proposed chatroom system (a chatroom system is a system where there are many users like user1,user2,....usern, and when any ser sends a message, it si broadcasted to everyone): https://drive.google.com/file/d/1SGDBfWNvzh7hkFYgjki4VEl_Flv11JkT/view
+Explantion of the architecture: There's a central server, and all the clients send message to that server. Whenever the server gets a message from any of the the clients, it sends a broadcast message to all the clients.
+
+Left at 1:14:42 sockets-1
