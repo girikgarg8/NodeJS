@@ -362,3 +362,9 @@ For the dummy-service.js, as discussed, we don't write test code for the code th
 We can also get coverage reports to find out how much percentage of our code is being tested.
 
 There's also another testing framework in Javascript: Mocha (pronounced as 'Mauka')
+
+Jest spyOn is a method used to spy on a method call on an object. It replaces the spied method with a stub, and does not actually execute the real method. 
+
+If I run the tests in a Test driven development (TDD), initially all the tests will fail. (because the expectation of an API may be to return an object but the given function may be returning a JSON response), so I will gradually move towards more test cases coverage
+
+The tests can be combined using the describe function of JEST.
