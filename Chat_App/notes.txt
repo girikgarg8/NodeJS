@@ -83,4 +83,10 @@ Note that the socket.emit() method can be called from either the client or the s
 Architecture of the proposed chatroom system (a chatroom system is a system where there are many users like user1,user2,....usern, and when any ser sends a message, it si broadcasted to everyone): https://drive.google.com/file/d/1SGDBfWNvzh7hkFYgjki4VEl_Flv11JkT/view
 Explantion of the architecture: There's a central server, and all the clients send message to that server. Whenever the server gets a message from any of the the clients, it sends a broadcast message to all the clients.
 
-Left at 1:14:42 sockets-1
+difference between socket.emit and io.emit functions:socket.emit will emit the message only to the specific client who has sent the data, but io.emit will emit the message to all the clients connected to the web socket
+
+for example: if I use io.emit function, and I open two separate windows, if I send a message through window1, it will be first sent to the server, and the server will send the message to all the clients reflected in both windows (window1 and window2) as well, but if I use socket.emit function, then the server will send back the response only to the specific client which sent the request.
+
+socket.broadcast.emit will send the response to all the clients, except the client which sent the request.
+
+Concept of rooms in Socket.Io: If I want to send a message to a subset of clients, I can use the concept of rooms in socket.io (This is for the concept of chatroom in real life)

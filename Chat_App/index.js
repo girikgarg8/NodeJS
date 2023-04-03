@@ -10,15 +10,20 @@ const io=socketio(server)
 io.on('connection',(socket)=>{
     console.log('A user connected ',socket.id)
 
-    socket.on('from_client',()=>{
-        console.log("event coming from client")
+    // socket.on('from_client',()=>{
+    //     console.log("event coming from client")
+    // })
+    // setInterval(()=>{
+    //     socket.emit('from_server',{data:'Hello from the server!'})
+    // },2000)
+    // setInterval(() => {
+    //     socket.emit('from_server_2', { data: 'Hello from the server-2!' })
+    // }, 1000)
+
+    socket.on('msg_send',(data)=>{
+        console.log(data);
+        socket.broadcast.emit('msg_rcvd',data);
     })
-    setInterval(()=>{
-        socket.emit('from_server',{data:'Hello from the server!'})
-    },2000)
-    setInterval(() => {
-        socket.emit('from_server_2', { data: 'Hello from the server-2!' })
-    }, 1000)
 });
 
 app.use('/',express.static(__dirname+'/public')) //this tellsthe path of all static files in the folder structure
