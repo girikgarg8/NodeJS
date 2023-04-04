@@ -90,3 +90,31 @@ for example: if I use io.emit function, and I open two separate windows, if I se
 socket.broadcast.emit will send the response to all the clients, except the client which sent the request.
 
 Concept of rooms in Socket.Io: If I want to send a message to a subset of clients, I can use the concept of rooms in socket.io (This is for the concept of chatroom in real life)
+
+===Completing the chat app===
+
+The concept I'll be using here is that I need to create a unique room ID, for each conversation happening between two clients
+
+What we are planning to build: On the frontend, we'll be specifying the chatID, and then the user can join the chat room and send messages
+
+What does EJS stand for? Embedded Javacript templating
+
+EJS is a templating language. What is a templating language in the first place? Refer to this blog: https://stackoverflow.com/questions/4026597/what-is-a-templating-language, the summary of this blog is:
+
+1) If I use the syntax of language everywhere, then it's a normal programming language, like:
+
+print "This is a simple document. It has three lines."
+print "On the second line is my name: " + firstName
+print "This is the third line."
+
+2)  But if I use the syntax of a language "embedded" inside another master document, then it's known as template language like:
+
+This is a simple document. It has three lines.
+On the second line is my name: $firstName
+This is the third line.
+
+So, EJS helps me to write HTML with Javascript like syntax.
+
+Here, in this project, I am doing server side rendering using EJS, I could have built a React app too, but the disavantage of doing it is that it will lead to tight coupling.
+
+1:05:26 sockets-2
