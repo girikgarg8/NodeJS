@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('typing',(data)=>{
-        socket.broadcast(data.roomid).emit('someone_typing');
+        io.to(data.roomid).emit('someone_typing');
     })
 });
 
@@ -47,7 +47,6 @@ app.get('/chatid/:roomid',async (req,res)=>{
     const chats=await Chat.find({
         roomId: req.params.roomid
     })
-    console.log(chats);
     res.render('index',{
         name:'Girik ',
         id:req.params.roomid,
