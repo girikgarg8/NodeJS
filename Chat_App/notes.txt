@@ -117,4 +117,13 @@ So, EJS helps me to write HTML with Javascript like syntax.
 
 Here, in this project, I am doing server side rendering using EJS, I could have built a React app too, but the disavantage of doing it is that it will lead to tight coupling.
 
-1:05:26 sockets-2
+Use cases of websockets in app:
+
+1) Using chat app like whatsapp or telegram to communicate
+2) Getting notification on apps like facebook or telegram, that someone commented or liked your photo
+
+In order to build a feature like double tick or double tick (read), we can use socket acknowledgement.
+
+In order to make a functionality like 'typing' (similar to what we have on WhatsApp), I can use the knowledge of DOM manipluation, I will print 'Typing' on keypress event
+
+1:23:31 sockets 2 (Socket.on typing pending)
