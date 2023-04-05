@@ -13,6 +13,7 @@
     <input id="startchat" type="hidden" data-roomid="<%= id %>"> </input>
     <input type="text" id="username" placeholder="user id...">
     <input type="text" id="newmsg" placeholder="message...">
+    <span id="typing">typing.... </span>
     <button id="btn"> Send </button>
         <ul id="msglist">
             <% for(let i=0; i < chats.length; i++) { %>
@@ -26,10 +27,13 @@
                 var socket = io();
                 let startchat=document.getElementById('startchat');
                 let btn = document.getElementById('btn');
+                let spanTyping=document.getElementById('typing');
+                spanTyping.style.display='none';
                 let inputMsg = document.getElementById('newmsg');
                 let msgList = document.getElementById('msglist');
                 let username=document.getElementById('username');
-
+                let typing=false;
+                let typingId=none;
                 socket.emit('join_room', {
                         roomid: startchat.getAttribute('data-roomid')
                 })
@@ -46,6 +50,12 @@
                     msgList.appendChild(limsg);
                 })
 
+                socket.on('someone_typing',(data)=>{
+                    spanTyping.style.display='block';
+                    typingId=setTimeout(()=>{
+                        
+                    },2000);
+                })
                 inputMsg.addEventListener('keypress',function (e){
                     socket.emit('typing',{
                         roomid: startchat.getAttribute('data-roomid')

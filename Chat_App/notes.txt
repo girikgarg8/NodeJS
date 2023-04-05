@@ -124,6 +124,6 @@ Use cases of websockets in app:
 
 In order to build a feature like double tick or double tick (read), we can use socket acknowledgement.
 
-In order to make a functionality like 'typing' (similar to what we have on WhatsApp), I can use the knowledge of DOM manipluation, I will print 'Typing' on keypress event
+In order to make a functionality like 'typing' (similar to what we have on WhatsApp), I can use the knowledge of DOM manipluation, I will print 'Typing' on keypress event, and emit on a socket, so that all the members of that group can see that someone is typing a message
 
-1:23:31 sockets 2 (Socket.on typing pending)
+1:29:12 sockets 2 
