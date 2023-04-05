@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('typing',(data)=>{
-        io.to(data.roomid).broadcast.emit('someone_typing');
+        socket.broadcast(data.roomid).emit('someone_typing');
     })
 });
 

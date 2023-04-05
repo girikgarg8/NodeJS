@@ -33,7 +33,8 @@
                 let msgList = document.getElementById('msglist');
                 let username=document.getElementById('username');
                 let typing=false;
-                let typingId=none;
+                let typingId=null;
+                let receiveTypingId=null;
                 socket.emit('join_room', {
                         roomid: startchat.getAttribute('data-roomid')
                 })
@@ -52,14 +53,19 @@
 
                 socket.on('someone_typing',(data)=>{
                     spanTyping.style.display='block';
-                    typingId=setTimeout(()=>{
-                        
-                    },2000);
+                    clearTimeout(receiveTypingId);
+                    receiveTypingId=setTimeout(()=>{
+                        spanTyping.style.display='none'
+                    },1000)
                 })
                 inputMsg.addEventListener('keypress',function (e){
-                    socket.emit('typing',{
+                    clearTimeout(typingId);
+                    socket.emit('typing', {
                         roomid: startchat.getAttribute('data-roomid')
                     })
+                    typingId = setTimeout(() => {
+                        if (!typing) spanTyping.style.display = 'none';
+                    }, 1000);
                 })
             </script>
 </body>
