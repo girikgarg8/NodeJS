@@ -1,0 +1,24 @@
+syntax="proto3"; //indicates we are using proto version 3
+
+service TodoService{ //we can define API contract too, in the protocol buffer
+    rpc CreateTodo (Todo) returns (Todo) {}
+    rpc GetTodo (TodoRequest) returns (Todo) {}
+    rpc ListTodo (Empty) returns (TodoList) {}
+}
+
+message Empty {}
+
+message Todo{
+    string id=1; //field numbers are used to identify fields in binary encoded data
+    string title=2;
+    optional string content=3;
+}
+
+message TodoList{
+    repeated Todo todos=1; //repeated field indicates that there would be an array of ToDos coming in
+}
+
+message TodoRequest{
+    string id=1; // the REST equivalent of this would be /todos/:id (resource based ) vs action based
+}
+
