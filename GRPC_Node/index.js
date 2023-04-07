@@ -9,7 +9,7 @@ const packageDefinition = protoLoader.loadSync('./todo.proto', {
 });
 
 const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-var todoService=protoDescriptor.TodoService;
+var todoService = protoDescriptor.TodoService;
 const server = new grpc.Server();
 
 const todos = [{
@@ -27,7 +27,7 @@ const todos = [{
 server.addService(todoService.service, {
     // below I am defining the RPCs 
     listTodos: (call, callback) => {
-        callback(null, {todos:todos}); // error first callback, as error is null                                                                    
+        callback(null, { todos: todos }); // error first callback, as error is null                                                                    
     },
     createTodo: (call, callback) => {
         let incomingNewTodo = call.request;
@@ -48,7 +48,7 @@ server.addService(todoService.service, {
     }
 });
 
-server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(),()=>{
+server.bindAsync('localhost:50051', grpc.ServerCredentials.createInsecure(), () => {
     console.log("Server started")
     server.start();
 });
