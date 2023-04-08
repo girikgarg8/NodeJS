@@ -10,12 +10,12 @@ const packageDefinition = protoLoader.loadSync('./todo.proto', {
 });
 
 const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-const todoService = protoDescriptor.TodoService;
-const client = new todoService('localhost:50051', grpc.credentials.createInsecure());
+const todoService = protoDescriptor.foo;
+const client = new todoService.TodoService('localhost:50051', grpc.credentials.createInsecure());
 
 console.log(client)
 // Call the listTodos function on the server
-client.listTodos({}, (err, response) => {
+client.listTodo({}, (err, response) => {
     if (err) {
         console.error(err);
         return;
