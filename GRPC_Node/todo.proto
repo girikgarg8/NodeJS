@@ -23,4 +23,3 @@ message TodoList{
 message TodoRequest{
     string id=1; // the REST equivalent of this would be /todos/:id (resource based ) vs action based
 }
-

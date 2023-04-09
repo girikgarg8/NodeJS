@@ -62,3 +62,22 @@ So basically, using protocol buffers, I can generate the code template in suppor
 
 There's one key difference between naming of APIs in REST is resource based (like /restaurants/123), but in gRPC it is more action based (like createTodo or getTodo)
 
+Many a times, what happens is that when we are using some website like Amazon or Google, internaly they are using gRPC APIs, but they expose a REST API (for convenience to users), and an API gateway accepts REST API and converts it to GRPC request
+
+Disadvantages of grPC:
+
+1. Needs lot of setup, even for a small project, learning curve is quite high
+
+Explanation of the code used: In the given code, the second object being passed as an argument to the protoLoader.loadSync() function is an options object that specifies various options for loading a Protocol Buffer definition file (.proto file) using the protoLoader library.
+
+Let's go over each option in the options object:
+
+keepCase: When set to true, it indicates that the field names in the generated JavaScript objects should maintain their original case as defined in the .proto file. If set to false, the field names will be converted to camelCase. For example, if keepCase is set to true, a field named field_name in the .proto file will be represented as field_name in the generated JavaScript object, whereas if keepCase is set to false, it will be represented as fieldName.
+
+longs: This option specifies how to handle long type fields in the generated JavaScript objects. When set to String, it indicates that long fields should be represented as strings in JavaScript, preserving their full precision. If set to Number, long fields will be represented as JavaScript numbers, but this may result in loss of precision for large long values.
+
+enums: This option specifies how to handle enum type fields in the generated JavaScript objects. When set to String, enum fields will be represented as strings in JavaScript, using the string names defined in the .proto file. If set to Number, enum fields will be represented as JavaScript numbers, corresponding to the numeric values defined in the .proto file.
+
+defaults: When set to true, it indicates that default values defined in the .proto file should be included in the generated JavaScript objects. If set to false, default values will be omitted from the generated objects.
+
+oneofs: When set to true, it indicates that oneof fields in the .proto file should be represented as JavaScript objects with the field names as keys, even if only one of the fields in the oneof group is set. If set to false, only the set field in the oneof group will be represented in the generated JavaScript object.
