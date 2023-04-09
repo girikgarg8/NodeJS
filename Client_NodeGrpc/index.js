@@ -15,10 +15,18 @@ const client = new todoService.TodoService('localhost:50051', grpc.credentials.c
 
 console.log(client)
 // Call the listTodos function on the server
-client.listTodo({}, (err, response) => {
-    if (err) {
-        console.error(err);
-        return;
+client.listTodo({}, (err, todos) => {
+    if (!err) {
+        console.log(todos);
+        client.createTodo({id:3,title:'third todo',content:'hiiiii'},(err,todo)=>{
+            if (!err){
+                console.log('Created a new todo');
+                client.listTodo({},(err,todos)=>{
+                    console.log ("After insertion",todos);
+                })
+            }
+            else console.log(err);
+        })
     }
-    console.log(response);
+    console.log(todos);
 });
