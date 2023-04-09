@@ -18,7 +18,7 @@ console.log(client)
 client.listTodo({}, (err, todos) => {
     if (!err) {
         console.log(todos);
-        client.createTodo({id:3,title:'third todo',content:'hiiiii'},(err,todo)=>{
+        client.createTodo({id:4,title:'third todo',content:'hiiiii'},(err,todo)=>{
             if (!err){
                 console.log('Created a new todo');
                 client.listTodo({},(err,todos)=>{
