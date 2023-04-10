@@ -1,0 +1,74 @@
+Let's first see: What is the use of OOPS in industry? Exceopt from the examples of dogs and cats, explained in textbooks :P
+
+1) Let's consider the example of flipkart, if I am viewing different pages for different products (let's say laptops.phones etc), so they share some properties(attributes) in common, like product name, price, discount, etc. So, instead of making separate classes or servlets for them, we can share common logic between them.
+
+2) (bit non technical example): whenever any building is to be made, the architect firstly makes the blueprint of the building.
+
+So the common blueprint (template) is called as class , it is not actual object but the overall design  
+
+So, summarising: class is a blueprint of real life instances and the real life instances of the classes are objects (like product is a class and Macbook pro is an object)
+
+===OOPS in JS===
+
+1. In JS, we have a class keyword (a very important point to note is that the class keyword was not avaialble from the very start, it was introduced only recently, clas is a syntactical sugar which was introduced recently)
+
+2. In a class, I will have the methods and the properties
+
+===this keyword in Javascript===
+
+Behaviour of this keyword in JS is different than C++ or Java 
+
+==> In JS, this keyword references to the calling site i.e. from where the function or class (Emphasis on: class or function) is getting called
+==> Whereas in C++ or Java, this is a pointer to the object.
+
+
+==new keyword in Javascript===
+
+1) It looks like, new keyword only calls constructor, but it does a lot more than that.
+2) new keyword is not only associated with classes. It can also be used with functions. (Class is just a wrapper/syntactical sugar over functions, everything under the hood happens with functions)
+
+==new keyword: how does it work with functions in JS===
+
+1) new keryword in c++ does dynamic memory allocation, but here it's not the keepCase
+
+2) There is a 4 step process on how new keyword exceutes in JS (Important) :
+
+When we use new keyword in javascript to call a function, the steps are:
+
+1. A brand new empty object  {} is created.
+
+2. Linkage to this object happends, basically the prototype inheritance takes place.
+
+3. The empty object, created in step 1, calls the function. As we said in the definition of 'this' keyword,'this' always refers to the calling site, so whenever I use the new keyword to create a function,'this' keyword will always refer to the empty object created in step-1.
+
+4. The function execution starts. If I am using statements like this.name='Girik' in the function execution, it will assign the property of name to the empty object created in step-1. One more point about function execution is that, if I am not returning anything explicity (while using the new keyword), 'this' keyword will get returned automatically.
+
+However, if I call the function without using 'new' keyword, it will return undefined. So, to avoid this confusion, while using class keyword, they made it compulsory to use 'new' keyword so that the object is returned.
+
+4.1 However, if I am returning any other object (like return {name:'Girik',age:19}), then that particular object will be returned. But fi I returna  non object value like 10, it will still return 'this' while using the new keyword.
+
+See the file functiondemo.js for code examples
+
+There's an important corner case, where the above theory doesn't work, see interesting_file for that case
+
+
+===OOPS Part 2 Video===
+
+Prototypes==> (Important for interviews)
+
+First of all, let's see inheritance in programming languages like C++,Java etc
+
+In these languages, consider a class Product{
+    int price;
+    string name;
+}
+
+Here when I create an object of the Product class, I am just creating a copy of the class, if I make any modification in the class (this is possible, there's a concept of monkey patching in Ruby which makes dynmaic changeto classes possible), then the chnages made to the classes won't reflect in the objects.
+
+However, in Javascript, we don't have any mental model of copy, objects are going to be linked to their classes (however as classes are nothing but a syntactical sugar/wrapper), the more appropritate statement would be objects are going to be linked to their prototypes.
+
+Important interview question: What is dunder proto? 
+
+"Dunder proto" is short for "double underscore proto," and it refers to the __proto__ property in JavaScript. It is also sometimes referred to as the "prototype chain" or "prototype object."
+
+In JavaScript, each object has a hidden property called __proto__ (pronounced "dunder proto") that refers to its prototype. The prototype is an object from which the current object inherits properties and methods. When you access a property or method on an object, JavaScript first looks for it in the object itself. If it doesn't find it there, it looks for it in the object's prototype (__proto__), and continues to follow the prototype chain until it finds the property or method or reaches the end of the chain.
