@@ -37,7 +37,7 @@ When we use new keyword in javascript to call a function, the steps are:
 
 1. A brand new empty object  {} is created.
 
-2. Linkage to this object happends, basically the prototype inheritance takes place.
+2. Linkage to this object happends, this is explained in more detail from line 80 onwards.
 
 3. The empty object, created in step 1, calls the function. As we said in the definition of 'this' keyword,'this' always refers to the calling site, so whenever I use the new keyword to create a function,'this' keyword will always refer to the empty object created in step-1.
 
@@ -72,3 +72,55 @@ Important interview question: What is dunder proto?
 "Dunder proto" is short for "double underscore proto," and it refers to the __proto__ property in JavaScript. It is also sometimes referred to as the "prototype chain" or "prototype object."
 
 In JavaScript, each object has a hidden property called __proto__ (pronounced "dunder proto") that refers to its prototype. The prototype is an object from which the current object inherits properties and methods. When you access a property or method on an object, JavaScript first looks for it in the object itself. If it doesn't find it there, it looks for it in the object's prototype (__proto__), and continues to follow the prototype chain until it finds the property or method or reaches the end of the chain.
+
+What is a prototype? It is a mechanism, in which JS objects inherits features from another object.
+
+Summarising a bit: every object has a prototype property. We can attach new data members or functions to the object, even after the class has been declared. See proto_example.js file
+
+What is the underlying mechanism/ what is happening? It's very important to understand !!
+
+There is this beautiful diagram, which explains the entire concept of prototype chaining, in a very beautiful manner, if we remeber this diagram, we can solve any interview question related to prototype chaining: https://drive.google.com/file/d/14DQxN7iE66VZ6sRA03AGuMsdch_0_Q2h/view
+
+Descritpion of this diagram: JS, in its internal environment, creates an object named 'Object', and also creates another unnamed object, which has methods like valueOf, toString() etc. In order to access this 'unnamed object', the 'Object' object is connected through a linkage called prototype, and the unnamed object has a linkage called constructor to the 'Object' object.
+
+Now in the user space, when I create the Product class, another unnamed object gets created, and the Product clas has linkage to this unnamed object through property called prototype, and the unnamed object has access to the Product class through constructor property.
+
+The prototype of Product (external JS) has a hidden link to the prototype of Object  (internal JS)
+
+Now when I create a new object of the class using new keyword, 4 step process takes place (as discussed eariler):
+
+1. A brand newe empty object  {} is created.
+2. The object is linked to the prototype of the function Product (it's important to note here that the object is linked to Prototype of function Product, not to the function Product)
+3. The empty object calls the function, (and as 'this' points to the calling site, so in this case, 'this' points to the empty object created in step-1).
+4. The function execution starts.
+
+Important point: dunder proto is the property of an object, whilke Protoype is the property of a function. (or class)
+
+Now, try experimenting with prototype properties in order to understand better.See experiment.js file
+
+So, whenever I try to access a data member or function from an object, it tries to access it from that object, if it's not able to find a suitable defintion in the object, then it goes up the protoype chain (to the prototype of Product), if it's still not able to find the definition, it goes to the prototype of 'Object' object.
+
+===OOPS Part-3====
+
+Discussing call(), apply() and bind() functions
+
+Exaplantion of these functions:
+
+call function is used to call a function with 'this' pointing to the object specified in the function argument. The other parameters to the function are comma seperated.
+
+apply function is also used to call a function with 'this' pointing to the object, and the other arguments to the function are passed as an array
+
+bind function is also used to bind the 'this' keyword with the object specified and the other arguments to the function are passed as comma separated arguments, but it returns a function, and we need to call that function.
+
+Bind is used a lot in React class based components code.
+
+Arrays in Javascript are also objects, where the keys are indices and the values are the array elements.
+
+Left at 1:13:15
+
+
+
+
+
+
+
