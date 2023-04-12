@@ -1,0 +1,29 @@
+====Intro to closures and callbacks video====
+
+We are going to use setTimeout and setInterval functions for code demonstration.
+
+setTimeout and setInterval are not functions defined by Javascript, as they are not present in the official ECMAScript documentation. But we are able to access these functions. 
+
+How are we still able to access these functions? Will be answered in some lectures.
+
+setTimeout is a function that helps to execute some task once after a certain timer
+
+setInterval: It is a function that helps us to execute some task again and again after a given interval. (Example: there could be a usecase, where I want to check database periodically after some interval)
+
+===What is a bacllback function===
+
+Callback function is a function passed as an argument to another function, which is then invoked (called) inside the outer function to complete some kind of action or routinue, in mathematical terms it's f(g(x))
+
+Arguments vs parameters? Argument is what the function expects, like fun(x) expects an argument but when we call fun(5), we are passing 5 as the parameter.
+
+Callback is not just a concept in Javascript, even in languages like C++, we can pass a function to another function, using function pointers.
+
+arr.mp(fn): it passes all the elements (one-by-one) of the given array as argument to the callback function.
+
+Also, arr.map returns an array after calculating the results for all the arguments passed as arguments. See the code examples file to understand better. map function never modifies the original array.
+
+Let's try to create a custom mapper funtion, which is a polyfill for map function in Javascript. Important interview question.
+
+setTimeout(callbackTask,timeInMilliseconds)
+
+Left at 1:46:11
