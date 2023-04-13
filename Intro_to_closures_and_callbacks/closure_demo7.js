@@ -3,7 +3,7 @@ function test(){
         // {scope iteration:1} {scope iteration:2} {scope:iteration 3}
         setTimeout(function exec(){ //so function exec rememeber the scope of function test, and when the setTimeout execeutes after completing the main thread, it will access the variable i from the scope of the function test, which would be 5 after the loop ends
 
-            //however if I use let instaed of var, i will remeber the scope of each block iteration,
+            //however if I use let instaed of var, i will remember the scope of each block iteration, see closure_Demo8.js file
             console.log(`i: ${i}`);
         },i*1000);
     }

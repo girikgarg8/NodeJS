@@ -48,8 +48,22 @@ the function todo is getting assigned the global scope, and the function fun is 
 
 It;s important that todo is not getting snapshotted, we are not storing the value of variable, we are just remebering the lexical scope (i.e. the enclosing scope) (will be clear from the code examples, see demo1.js file)
 
-One more thing to note here is that, (for example in the code snippet of demo1.js file), the variable todo from 'task' is not getting vanished after function execution, if there's a function which has closure with the outside scope, it will be able to access that varibale from the lexical scope.
-
-1:55:38 Promises and Callback
+One more thing to note here is that, (for example in the code snippet of demo1.js file), the variable todo from 'task' is not getting vanished after function execution, if there's a function which has closure with the outside scope, it will be able to access that variable from the lexical scope.
 
 
+===Async nature of JS Lecture===
+
+How JS handles async operations? (This is a very practical aspect of JS)
+
+Languages like Java,C++ are multithreaded but Javascript is single-threaded.
+
+Let's understand about async operations in real life applications:
+
+1. Let's say I have built a Swiggy like app on Javascript, and I am using payment services from Razorpay, then I need to make an API call to Razorpay, let's say it takes 2 seconds to make an API call, so during these 2 seconds, should the app freeze? No, that's a very bad user experience
+
+2. Let's say I am designing facebook like app on JS, and I hit the like button on a post, then I need to make a call to make the changes in the database as well, let's say it takes 3 seconds, again I can't let the app freeze, that would be a very bad experience. 
+
+
+Javascript, by default, supports only synchronous code execution. (What I mean by synchornous is that: if there are 5 lines of code to be executed, and the 4th line of code requires me to wait 5 seconds, I will wait for 5 seconds and then move to the next line of code )
+
+18:28
