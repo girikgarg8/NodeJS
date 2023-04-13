@@ -26,4 +26,30 @@ Let's try to create a custom mapper funtion, which is a polyfill for map functio
 
 setTimeout(callbackTask,timeInMilliseconds)
 
-Left at 1:46:11
+Real life Use case of setTimeout function: in notyjs notifications, the popup appears for a particular time duration, and after that, the notification disappears
+
+====Promises and callback Lecture====
+
+Concept of closures: Technically, closures is a result of scoping mechanism in Javacript. Let's try to understand what is closure, with the help of code snippet in closure_demo1.js
+
+The thing to wonder about in this code is that: the function fun is getting called after the function todo has already finsihed executing, so how is it able to access the task property from the function todo, even though the function todo has stopped executing? The answer lies in closures. 
+
+See the image attached: https://drive.google.com/open?id=1sneg74yD_2jrAXjYJYeSbor7fbr045eh
+
+This happens due to closures.
+
+Closure is when a function remembers its lexical scope,(remembering lexical scope means whatever variables and functions were accessible in the lexical scope of that function) even htough the function may be execited outside of that lexical scope.
+
+So, in the given example,the function fun is in the scope of function todo, and the function fun is executed outside the scope of todo.
+
+How does scope resolution work in the above code example? 
+
+the function todo is getting assigned the global scope, and the function fun is getting assigned the scope of function todo. Now by the property of closures, the function fun remembers its lexical scope (todo), so even though the function 'todo' may be called outside of the scope of function todo, it will still have access to the variables or functions (data members) defined in the lexical scope i.e. the scope of todo.
+
+It;s important that todo is not getting snapshotted, we are not storing the value of variable, we are just remebering the lexical scope (i.e. the enclosing scope) (will be clear from the code examples, see demo1.js file)
+
+One more thing to note here is that, (for example in the code snippet of demo1.js file), the variable todo from 'task' is not getting vanished after function execution, if there's a function which has closure with the outside scope, it will be able to access that varibale from the lexical scope.
+
+1:55:38 Promises and Callback
+
+
