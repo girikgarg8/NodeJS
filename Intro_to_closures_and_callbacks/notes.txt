@@ -64,6 +64,20 @@ Let's understand about async operations in real life applications:
 2. Let's say I am designing facebook like app on JS, and I hit the like button on a post, then I need to make a call to make the changes in the database as well, let's say it takes 3 seconds, again I can't let the app freeze, that would be a very bad experience. 
 
 
-Javascript, by default, supports only synchronous code execution. (What I mean by synchornous is that: if there are 5 lines of code to be executed, and the 4th line of code requires me to wait 5 seconds, I will wait for 5 seconds and then move to the next line of code )
+Javascript, by default, supports only synchronous code execution. (What I mean by synchornous is that: if there are 5 lines of code to be executed, and the 4th line of code requires me to wait 5 seconds, I will wait for 5 seconds and then move to the next line of code ) (See the sync_code_demo.js file)
 
-18:28
+IMPOTRTANT NOTE: Thr property of by default synchronous code execution works only for operations (like for loop, while loop etc but not setTimeout, setTimeout is not provided by the javascript, it is provided by browser) which are known to Javacript.
+
+
+Let's talk about JS runtime environment: So, initially Jaavscript was intended to be used only on browsers, and browsers provided the JS runtime environment. In a layman term, I can say that JS alone is very weak, many of the powers to the JS come through the JS runtime environment. In the case of browsers, the browser provides access to Web APIs like DOM APIs (for example the document.getElementById is provided by the browser, it is not provided by Javascript itself), setTimeout, set Interval etc
+
+one more important thing: JS engine is a component of JS runtime environment,so don't confuse between JS runtime environment and JS engine.
+
+However, in 2009, the inventor of NodeJS (Ryan Dahl, need not to cram his name :P), used a runtime environment for JS, which was not the browser, and using this runtime environment, he got access to the file system (file handling with hard disk which we do in other languages too), process (the environment variable process which we have access to), and setTimeout (setTimeout in this case is provided by the OS functionality)
+
+See these diagrams: https://drive.google.com/open?id=1W6qaAnI4abgMSIrdToLhwNj-Z-zHbasU
+and https://drive.google.com/open?id=1Up42sbdCYnooqEADFVe7_e_OZt8BAlMM
+
+Just a side note: When I execute the code using 'code runner' in VS Code, it actualy executes the command 'node index.js', so I am running thje file inside Node runtime environment.
+
+Left at 39:04
