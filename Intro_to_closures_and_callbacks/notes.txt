@@ -75,9 +75,25 @@ one more important thing: JS engine is a component of JS runtime environment,so 
 
 However, in 2009, the inventor of NodeJS (Ryan Dahl, need not to cram his name :P), used a runtime environment for JS, which was not the browser, and using this runtime environment, he got access to the file system (file handling with hard disk which we do in other languages too), process (the environment variable process which we have access to), and setTimeout (setTimeout in this case is provided by the OS functionality)
 
+
 See these diagrams: https://drive.google.com/open?id=1W6qaAnI4abgMSIrdToLhwNj-Z-zHbasU
 and https://drive.google.com/open?id=1Up42sbdCYnooqEADFVe7_e_OZt8BAlMM
 
-Just a side note: When I execute the code using 'code runner' in VS Code, it actualy executes the command 'node index.js', so I am running thje file inside Node runtime environment.
+Just a side note: When I execute the code using 'code runner' in VS Code, it actualy executes the command 'node index.js', so I am running the file inside Node runtime environment.
 
-Left at 39:04
+So, now we know that runtime also provides functionalities that can be leveraged by JS. But how does JS handle them? 
+
+Now the question that arises: we can easily do tasks that take a lot of time to complete without blocking the code flow. How??
+
+Let's understand with the code example from code_example.js file
+
+Explantion of the code from that file: First of all, the global execution context is pushed into the call stack, (global execution stack is just a fancy name for the global scope code), and thereafter the process function is called (so it is pushed into the call stack), now the function process is executing, it will print "Start", when it sees the line setTimeout, it asks the runtime environment (NodeJS or browser), to  execute the code (Since core JS doesn't know how to execute setTimeout), and the core JS, goes to the for loop to execute. 
+
+Now let us suppose that the for loop takes 8 seconds to execute, meanwhile at the end of 3 seconds, the timer would execute, so the runtime environment would tell the JS that the function execution hasd completed, but still JS wouldn't bother about it, (just like we don't listen to our mothers sometime :P), so the runtime environment would push the timer into the event queue.
+
+Now the events are picked from the event queue, only when the call stack is completely empty, i.e. evene the global execution event is also not present inside the call stack.
+
+See the attached diagram for the diagrammatic explanation of the concept: https://drive.google.com/open?id=1PXn_yHQg26KG-K4TDjADP-N3aUTfKKhv
+
+
+Left at 1:01:03
