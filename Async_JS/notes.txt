@@ -91,9 +91,52 @@ Explantion of the code from that file: First of all, the global execution contex
 
 Now let us suppose that the for loop takes 8 seconds to execute, meanwhile at the end of 3 seconds, the timer would execute, so the runtime environment would tell the JS that the function execution hasd completed, but still JS wouldn't bother about it, (just like we don't listen to our mothers sometime :P), so the runtime environment would push the timer into the event queue.
 
-Now the events are picked from the event queue, only when the call stack is completely empty, i.e. evene the global execution event is also not present inside the call stack.
+Now the events are picked from the event queue by a process called event loop (event loop runs continuosly in the background), only when the call stack is completely empty, i.e. evene the global execution event is also not present inside the call stack.
 
 See the attached diagram for the diagrammatic explanation of the concept: https://drive.google.com/open?id=1PXn_yHQg26KG-K4TDjADP-N3aUTfKKhv
 
+===Lecture on Promise===
 
-Left at 1:01:03
+An interesting and important discussion about console.* statements in JS (like console.log and console.err)
+
+== console.* statements are not a function of core JS, they are provided by the runtime environment (like Node runtime environment or the browser's runtime environment)
+
+So, now the question is that since console.* is being provided by the browser, so is it also asynchronous like the setTimeout and setInterval functions, which are asynchronous and are being provided by the runtime environment?
+
+Answer: NO, console.log is not always synchronous or asynchronous, it depends on the runtime envionment (so we can't give a concrete answer to whether the console.* is asynchronous or synchronous). Moreover, not every operation, performed by the runtime envionment is asynchronous in nature.
+
+Explanation: Let us take the case of Node Runtime environment. In NodeJS runtime environment, using console.log internally calls proces.stdout function. Now from the documentation of console.* properties, https://nodejs.org/api/process.html#a-note-on-process-io, it is clear that for file system, it is synchronous for file system on both Windows and POSIX (loosely understand it as UNIX). But for TTY (TTY is a kind of legacy terminal), it is  asynchronous on Windows, synchronous on POSIX (loosely understand it as UNIX).
+
+Applications of the fact that console.log is not asynchonrous in nature:
+
+1) Many webpgaes ask you to visit their webpage on Chrome or Safari etc, because behavior of console.log is unpredictable in some other runtimes.
+
+2) Many a times, in production applications, we use separate logging libtraries, because again, the behavior of console.log is not predictable.
+
+3) Take the code example from console_log.js file, run it in browser, and expand the first x object, you'll get x:10, another reason why console.log shouldn't be used in production ready code (Similar thing happens in case of promises, it shows the promise to be fulfilled on expanding, even though the console.log statement says the promise to be pending) (this behaviour is because the browser substitutes the latest or current value of object on expanidng the object)
+
+http://latentflip.com/loupe/ This is a nice tool to visualise call stack, callback queue and Web APIs in Javascript
+
+What are the disadvantages of using callback?
+
+Many people think that the major disadvantage of using callbacks is callback hell. It's partially true, but it is not the 'major' disadvantage of using callbacks, because even when using promises, we can encounter a situation of 'promise hell'.
+
+1) Callback hell: It is the phenomenon where we pass callbacks to callbacks, which makes the code reability less, and also leads to pyramid of doom, see the example at: http://callbackhell.com/
+
+2) Inversion of control: let's understand it through inversion_of_control.js file
+
+So formally, inversion of control is when I have defined the logic of callback function, but I am not the one who is executing it. The call back function's logic is executed by some other function
+
+Inversion of control is not always a problem, for example, in recursion, it's necessary
+
+So, to solve the problem of inversion of control and callback hell, we introduced Promises in Javascript.
+
+What is promise? From MDN documentation, Promise is a javascript object which indicates the eventual completion or failure of an asynchronous operation.
+
+Sanket Sir's definition: Promises are special JS objects that are also considered readability enhancers. They get immediately returned from a function set up to return promises. 
+
+They act as placeholder (kind of temporary variable) for data we hope to get back from some future task.
+
+-We also attach the functionality, we want to defer (delay) until the future task is done. Promise automatically handles execution of functionality.
+
+==See why_promise_callback_hell.js and why_callback_hell_2.js file. It will give an idea of why promises are required 
