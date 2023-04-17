@@ -140,3 +140,74 @@ They act as placeholder (kind of temporary variable) for data we hope to get bac
 -We also attach the functionality, we want to defer (delay) until the future task is done. Promise automatically handles execution of functionality.
 
 ==See why_promise_callback_hell.js and why_callback_hell_2.js file. It will give an idea of why promises are required 
+
+===Promises continued Lecture===
+
+What we need to study about Promises? Three things:
+
+1) How to create a Promise Object?
+2) How to consume a Promise object?
+3) What are the properties of Promise Object?
+
+Let's understand this:
+
+Every promise object has 4 major properties: (don't forget these,I often ignore them :P)
+
+1) status
+2) value
+3) onFullfillment (it's not resolve, it's fulfill, please take a note)
+4) onReject
+
+Let's understand these, one by one:
+
+1) status: shows the current status of promise
+
+1.1 pending state: the current promise is currently executing
+1.2 fulfilled state: tells that the asynchonrous task was completed successfully (it's not resolved, it's fulfilled)
+1.3 rejected state: tells that the asynchonrous task was not completed successfully
+
+1.4 resolving a promise may mean any of the three: pending, rejecting or fulfilled. So 'resolved' is a generic term in general.
+
+2) value: when the status of the promise is pending, the value property is undefined. The moment, the promise is resolved, the status changes to fulfilled, and the value property is updated from undefined to new value (new value here means the return value or resolved value). So, the value property acts like a placeholder till the time promise finishes.
+
+3) onFullfillment: This is an array, which contains the functions that we attach to our promise object. (to a promise object, we can attach some functions using .then() method). When the value property is updated from undefined to the new value, JS gives chance to the attached functioins one by one, with the value property as the argument (if there is no piece code in the call stack and global code is left) (basically they are referring to the microtask queue)
+
+4) onReject: similar to onFullfillment, except for the fact that it executes when the promise is rejcted
+
+ See the images attached: https://drive.google.com/open?id=1YNAfJroeYvluf5B-25tFBSP3rO4Q-NsL and https://drive.google.com/open?id=1IxRZ4jg0xoUFl7knZw1L6QJZqo7174jY
+
+
+===Learning how to create a new Promise===
+Explanation: The promise object is created with the help of the constructor of Promise object. The constructor of Promise object takes a callback function as an argument, and this callback function expects two arguments 'resolve' and 'reject'. 
+
+Also, Promise is something that is defined inside the ECMAScript documentation, so we can say it is a functionality of core JS.
+
+Inside the promise object, I can do the asynchornous or synchornous task (yes, it is possible to do synchronous tasks too in promise, though it is mostly used to do asynchonrous tasks)
+
+When I need to return the data, I used to call the callback function in case of callbacks. But here, I will call two functions 'resolve' or 'reject' in order to return the data, dependeing upon whether the task was successful or not.
+
+We get the message: Uncaught (in promise) when a promise is rejected, but we haven't defined the code in the .catch() block (this is the messsage we often see in browsers)
+
+See create_promise_1.js,create_promise_2.js and create_promise_3.js file for playing with code.
+
+Let's learn how to both produce and consume promise, with the help of consume_promise.js file, it's a fantastic learning experience
+
+===Consuming a promise===
+The prmoise function is the main beauty, using which we will avoid inversion of control. (How does using promises help avoid inversion of control, see promise_inversion_of_control.js file for this) Whenever we call a function, returning a promise, we will get a promise object which is like any JS object that we can store in a variable.
+
+Technically, when the promise gets resolved, we have to execute some functions.
+
+We can use the .then() function on the promise object, to bind the functions we want to execute once we fulfill a promise.
+
+The .then() function takes as an argument the function that we want to execute after promise fulfills, and this argument function takes the value property as parameter.'
+
+
+===Async await lecture===
+
+Some more functions related to promises: Promise.resolve(), this function will return a fulfilled promise, with the value specified in the argument.
+
+Promise.reject() will return a rejected promise, with the error specified in the arguments.
+
+See promise_functions.js file
+
+Left at 24:29
