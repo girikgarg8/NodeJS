@@ -210,4 +210,6 @@ Promise.reject() will return a rejected promise, with the error specified in the
 
 See promise_functions.js file
 
-Left at 24:29
+
+Left at 51:43
+
