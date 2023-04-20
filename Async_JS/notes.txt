@@ -210,6 +210,8 @@ Promise.reject() will return a rejected promise, with the error specified in the
 
 See promise_functions.js file
 
+Microtask queue contains the "callback functions" returned from the promise object, while the callback queue (a.k.a "event queue", but I prfer to call and remember it as the callback queue) gets the "callback functions" from the setTimeout API.
 
-Left at 51:43
+See microtask_and_Callback_queue.js file for some examples with both.
 
+Left at 56:57, try the demo3.js file from the video, it will clear the conepts even further
