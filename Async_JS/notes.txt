@@ -212,6 +212,13 @@ See promise_functions.js file
 
 Microtask queue contains the "callback functions" returned from the promise object, while the callback queue (a.k.a "event queue", but I prfer to call and remember it as the callback queue) gets the "callback functions" from the setTimeout API.
 
-See microtask_and_Callback_queue.js file for some examples with both.
+See microtask_and_Callback_queue.js and  microtask_queue_example_3.jsfile for some examples with both.
 
-Left at 56:57, try the demo3.js file from the video, it will clear the conepts even further
+===Introduction to async and await keywords===
+
+We can declare a function async. If we declare a function async, it does the following:
+
+1) It allows the use of await keyword.
+2) If you declare a function async,it allows consumption of a promise using 'await' (rather than the traditional way of consuming promises using 'await')
+
+Left at 1:24:14
