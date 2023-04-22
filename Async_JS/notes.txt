@@ -220,5 +220,11 @@ We can declare a function async. If we declare a function async, it does the fol
 
 1) It allows the use of await keyword.
 2) If you declare a function async,it allows consumption of a promise using 'await' (rather than the traditional way of consuming promises using 'await')
+3) An async function always returns a promise, (even though there may be undefined or null etc in the object, it will still be converted to a promise), NOTE CAREFULLY that I didn't say that the await keyword returns a promise, the OVERALL async function returns a promise.
 
-Left at 1:24:14
+See async_await_demo.js file and async_await_example_2.js files, for some examples on async-await, it will make the coneptual understanding even stronger :)
+
+Just remeber two basic things: Promises are an asbtraction/imporvement over callbacks, and await is a syntactical sugar over promise.then(), always stick to these basics, you'll never be defeated :) 
+
+
+

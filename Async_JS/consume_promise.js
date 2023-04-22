@@ -3,38 +3,38 @@ let's again take the example of fetching some data from a URL, write it into a f
 
 as these tasks require a particular order to execute 1->2->3 , so I can either use callbacks or promises, here I am using promises to do the task
 */
-function fetchData(url){
-    return new Promise(function process(resolve,reject){
+function fetchData(url) {
+    return new Promise(function process(resolve, reject) {
         //inside the process object, write logic to perform the synchronous or asnychronous task
         //async task
-        setTimeout(function fun(){
-            console.log("Started fetching data from ",url);
-            const data="RC_Mukherjee_Book";
+        setTimeout(function fun() {
+            console.log("Started fetching data from ", url);
+            const data = "RC_Mukherjee_Book";
             resolve(data);
-        },7000);
+        }, 7000);
     })
 }
 
-function writeData(data){
-    return new Promise(function (resolve,reject){
-        setTimeout(function fun(){
+function writeData(data) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function fun() {
             console.log("Started writing into file");
-            const filename="output.txt";
+            const filename = "output.txt";
             resolve(filename); //think that it is analogous to call callback function from callback function
-        },3000)
-      }
+        }, 3000)
+    }
     )
 }
 
 
-function upload(filename,url){
-    return new Promise(function process (resolve,reject){
-            setTimeout(function fun(){
-                console.log("Started uploading file ",filename, " to URL ",url);
-                const result="SUCCESS"; 
-                resolve(result);
-            },3000);
-        }
+function upload(filename, url) {
+    return new Promise(function process(resolve, reject) {
+        setTimeout(function fun() {
+            console.log("Started uploading file ", filename, " to URL ", url);
+            const result = "SUCCESS";
+            resolve(result);
+        }, 3000);
+    }
     )
 }
 
@@ -77,22 +77,25 @@ function upload(filename,url){
 let downloadPromise4 = fetchData("www.pdfdrive.com");
 
 downloadPromise4.then(
-    function resolveDownload(downloadData){
-        console.log("Downloaded data is ",downloadData);
-        return downloadData; //x is a promise whose value is "RC_Mukherjee_Book" upon fulfillment, the first promise has to return the data while subsequent promises in the promise chain have to return "promises", not "values"(inputs/outputs)
+    function resolveDownload(downloadData) {
+        console.log("Downloaded data is ", downloadData);
+        let x = Promise.resolve(downloadData);
+        return x;
+        //return downloadData; //a .then() function always and always expects a promise as input, so this will be automatically wrapped inside a promise, technically returning download data is interna;lly resolving a promise, and returning it to the promise chain
+
+        // see this explantion from ChatGpt: Yes, that's correct. When you return a value from a .then() function, that value will be wrapped in a new promise by the .then() function. In the case of the first .then() function in the example, the downloadData value is returned directly, which means that it will be wrapped in a new promise by the .then() function. This allows the value to be passed on to the next .then() function in the chain as a promise, which can then be used to perform further asynchronous operations.
+
+        //TLDR: anything returned from a .then() will automatically be converted into a promise, like coercion
     }
 )
-.then(
-    function processWrite(value){
-       return writeData(value) //return promise
-    }
-)
-.then(function processUpload(value){
-    return upload(value,"drive.google.com");
-})
-.then(function resolveUpload(success){
-    console.log("All three steps completed successfully");
-})
-
-
-
+    .then(
+        function processWrite(value) {
+            return writeData(value) //return promise
+        }
+    )
+    .then(function processUpload(value) {
+        return upload(value, "drive.google.com");
+    })
+    .then(function resolveUpload(success) {
+        console.log("All three steps completed successfully");
+    })
