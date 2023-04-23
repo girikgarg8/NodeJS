@@ -226,5 +226,10 @@ See async_await_demo.js file and async_await_example_2.js files, for some exampl
 
 Just remeber two basic things: Promises are an asbtraction/imporvement over callbacks, and await is a syntactical sugar over promise.then(), always stick to these basics, you'll never be defeated :) 
 
+Also, one more thing to always keep in mind, Jaavscript never waits for any asynchronous piece of code, it will always try to execute any synchronous piece of code, if available.
+
+
+
+
 
 
