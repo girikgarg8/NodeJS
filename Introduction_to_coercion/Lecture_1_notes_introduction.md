@@ -78,9 +78,13 @@ A TypeError may be thrown when:
 
 Q. Now the question arises, how can I test the toPrimitive abstract function, because it is an asbtract function, so I as a programmer can't directly call this function.
 
-A. The answer to this question, is that the addition(+) and subtraction operators (-), make use of the toNumber/toString abstract functions,and these abstract functions, in turn call the toPrimitive functrion, so we can test the functionalty.
+A. The answer to this question, is that the addition(+) and subtraction operators (-), make use of the toNumber/toString abstract functions,and these abstract functions, in turn call the toPrimitive functrion, so we can test the functionality of toPrimitive using these abstract functions.
 
 See the diagram below:
+
+[Diagram](https://drive.google.com/open?id=1TDaAjOJDe9WFlNKpBGDwNzsjzrtmHBDM)
+
+So, now let's understand the toString and toNumber abstract functions, before moving on to addition and subtraction operators.
 
 
 
