@@ -53,17 +53,10 @@ If we don't return anything in Javascript function, it will return undefined by 
 3) async js
 
 
-==ToString() function==
-undefined: return "undefined"
-null: return "null"
-boolean:  returns "True"/"False" as the case may be
-Number: calls NumberToString() function
-String: returns the passed argument
-Symbol: Throws a TypeError 
-Object: calls the toPrimitive function, let's say the output is a then recursively passes a into toString function
+
 
 ==addition operator (+)==(addition wokrs on lprim and rprim)
-let lprim=toPrimtive(lval) and let rprim=tPrimitive(rval)
+let lprim=toPrimtive(lval) and let rprim=toPrimitive(rval)
 
 if either of lrprim or rprim is string:
     then lstr=toString(lrpim)
@@ -74,18 +67,11 @@ if neither of lprim or prim wasn't a string:
     return result of addition to lnum and rnum
 
 ==ToNumber==
-Undefined return NaN (Little discussion about NaN: NaN is used to represent an invalid index, for example if in a array an element doesn't exist, then we could return -1, but in language like python -1 also denotes an index, so we return NaN: an indicator of invalid index)
 
 Null returns +0
 Boolean return 1/0 as the case may be
 String: some Algorithm, the conclusion of algorithm is that if you convert string to number it will rturn that else not
-Some examples of this algorithm:
-""->0
-"0"->0
-"-0"->-0
-"3.145"->3.145
-"0."->0
-"."->NaN
+
 symbol: typerror 
 object: call toPrimitive, let's say output is x, recursively call toNumber on x as well. 
 

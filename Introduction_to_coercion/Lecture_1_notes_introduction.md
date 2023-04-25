@@ -61,7 +61,7 @@ Explanation of ==OrdinaryToPrimitive== (Just for remembering, OTP OrdinaryToPrim
 1 . for hint="number", methodNames are valueOf() and toString() (order is important)
 2 . for hint="string", methodNames are toString() and valueOf() (in that order)
 3 . Call the first methodName on the input argument, if the returned answer is a non-object (primitive value), then return it. Else, return the output of second methodName.
-4 . If there's a case where both the methods are not able to return a non-object value, in that case a TypeError exception will be thrown.
+4 . If there's a case where both the methods are not able to return a non-object value, in that case a TypeError exception will be thrown. //note that these methods toString and valueOf are not abstract functions, so we can override them and play with them, see the code_examples_first_lecture.js file
 
 ===A note on TypeError exception (MDN documentation)===
 
@@ -78,13 +78,76 @@ A TypeError may be thrown when:
 
 Q. Now the question arises, how can I test the toPrimitive abstract function, because it is an asbtract function, so I as a programmer can't directly call this function.
 
-A. The answer to this question, is that the addition(+) and subtraction operators (-), make use of the toNumber/toString abstract functions,and these abstract functions, in turn call the toPrimitive functrion, so we can test the functionality of toPrimitive using these abstract functions.
+A. The answer to this question, is that the addition(+) and subtraction operators (-), make use of the ToNumber/ToString abstract functions,and these abstract functions, in turn call the toPrimitive functrion, so we can test the functionality of toPrimitive using these abstract functions.
+
+NOTE: ToString is an abstract function while toString is a method of javascript objects.
 
 See the diagram below:
 
 [Diagram](https://drive.google.com/open?id=1TDaAjOJDe9WFlNKpBGDwNzsjzrtmHBDM)
 
-So, now let's understand the toString and toNumber abstract functions, before moving on to addition and subtraction operators.
+So, now let's understand the ToString and ToNumber abstract functions, before moving on to addition and subtraction operators.
+
+From the documentation:
+
+==ToString() abstract function==
+    undefined: return "undefined" as a string
+
+    null: return "null" as a string
+
+    boolean:  returns "True"/"False" as the case may be
+
+    Number: calls NumberToString() function
+
+    String: returns the passed argument
+
+    Symbol: Throws a TypeError 
+
+    Object: calls the toPrimitive function with hint as "String" , let's say the output is 'x' then recursively passes 'x' into toString function if 'x' is not of type String (Why the need for recursion? Becuase ToPrimitive might return a number, it is okay from the POV of toPrimtive but not fine from the POV of ToString abstract function)
+
+    Formally, this is what is mentioned for Object: 	
+        Apply the following steps:
+
+        Let primValue be ? ToPrimitive(argument, hint String).
+        Return ? ToString(primValue).
+
+
+===ToNumber Abstract Function===
+
+Argument Type	Result
+Undefined NaN 
+
+(Little discussion about NaN: NaN is used to represent an invalid index, for example if in a array an element doesn't exist, then we could return -1, but in language like python -1 also denotes an index, so we return NaN: an indicator of invalid index).
+
+Null	Return +0.
+
+Boolean	If argument is true, return 1. If argument is false, return +0.
+
+Number	Return argument (no conversion).
+
+String	See grammar and conversion algorithm below. (the summary is if a number is like "123", it will be converted into 123, but it will give NaN for any other string like "12345ABC")
+
+Some examples of this algorithm:
+""->0
+"0"->0
+"-0"->-0
+"3.145"->3.145
+"0."->0
+"."->NaN
+
+In technical terms, If the grammar cannot interpret the String as an expansion of StringNumericLiteral, then the result of ToNumber is NaN.
+
+Symbol	Throw a TypeError exception.
+
+Object: Calls the toPrimitive abstract function with hint as Number, and uses recursion if needed.
+Apply the following steps:
+
+Let primValue be ? ToPrimitive(argument, hint Number).
+Return ? ToNumber(primValue).
+
+
+== Discussion on Addition operator(+) == (TODO)
+
 
 
 
