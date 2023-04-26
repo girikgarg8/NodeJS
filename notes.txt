@@ -55,16 +55,7 @@ If we don't return anything in Javascript function, it will return undefined by 
 
 
 
-==addition operator (+)==(addition wokrs on lprim and rprim)
-let lprim=toPrimtive(lval) and let rprim=toPrimitive(rval)
 
-if either of lrprim or rprim is string:
-    then lstr=toString(lrpim)
-        rstr=toString(rprim)
-        return string concatentation of lstr and rstr
-if neither of lprim or prim wasn't a string:
-    then let lnum be toNumber(lrpim) and let rnum be toNumber(rprim)
-    return result of addition to lnum and rnum
 
 ==ToNumber==
 

@@ -146,7 +146,20 @@ Let primValue be ? ToPrimitive(argument, hint Number).
 Return ? ToNumber(primValue).
 
 
-== Discussion on Addition operator(+) == (TODO)
+== Discussion on Addition operator(+) == 
+
+
+==addition operator (+)==(addition works  on lprim and rprim)
+
+let lprim=toPrimtive(lval) and let rprim=toPrimitive(rval) //It is important to note here that the ToPrimtive is not called with any preferred type as 'String' or 'Number', because it gives a fair chance to the object to meet its fate
+
+if either of lrprim or rprim is string:
+    then lstr=toString(lrpim)
+        rstr=toString(rprim)
+        return string concatentation of lstr and rstr
+if neither of lprim or prim wasn't a string:
+    then let lnum be toNumber(lrpim) and let rnum be toNumber(rprim)
+    return result of addition to lnum and rnum
 
 
 
