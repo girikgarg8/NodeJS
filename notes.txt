@@ -53,33 +53,6 @@ If we don't return anything in Javascript function, it will return undefined by 
 3) async js
 
 
-
-
-
-
-==ToNumber==
-
-Null returns +0
-Boolean return 1/0 as the case may be
-String: some Algorithm, the conclusion of algorithm is that if you convert string to number it will rturn that else not
-
-symbol: typerror 
-object: call toPrimitive, let's say output is x, recursively call toNumber on x as well. 
-
-===Working of - (minus) ===
-it just converts both opernds to number using toNumber() abstract function (let them be lnum and rnum), and then subtract them 
-
-NaN+-NaN is NaN because any operation with invalid number is invalid
-
-Infinity is different from NaN, 3/0 is Infinity 3/"Sanket" is NaN
-
-ASCII value is not taken for strings so 'a'-4 will return NaN
-
-Some rules for array: array of null, undefined,"0" and "" will get converted to zero
-[null]=[undefined]=["0"]=[""]=[] will all get coerced to 0
-
-array of NaN will return NaN [NaN]=NaN
-
 but array of [1,2,3] will return a NaN
 
 

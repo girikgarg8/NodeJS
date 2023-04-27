@@ -161,6 +161,18 @@ if neither of lprim or prim wasn't a string:
     then let lnum be toNumber(lrpim) and let rnum be toNumber(rprim)
     return result of addition to lnum and rnum
 
+===Working of subtract operator (minus) ===
 
+it just converts both operands to number using toNumber() abstract function (let them be lnum and rnum), and then subtract them 
 
+NaN+-NaN is NaN because any operation with invalid number is invalid
+
+Infinity is different from NaN, 3/0 is Infinity 3/"Sanket" is NaN
+
+ASCII value is not taken for strings so 'a'-4 will return NaN
+
+Some rules for array: array of null, undefined,"0" and "" will get converted to zero
+ [null]=[undefined]=["0"]=[""]=[] will all get coerced to 0
+
+array of NaN will return NaN, what I mean is [NaN]=NaN
 
