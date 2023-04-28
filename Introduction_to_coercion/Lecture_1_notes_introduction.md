@@ -161,7 +161,7 @@ if neither of lprim or prim wasn't a string:
     then let lnum be toNumber(lrpim) and let rnum be toNumber(rprim)
     return result of addition to lnum and rnum
 
-===Working of subtract operator (minus) ===
+===Working of subtraction operator (minus) ===
 
 it just converts both operands to number using toNumber() abstract function (let them be lnum and rnum), and then subtract them 
 
