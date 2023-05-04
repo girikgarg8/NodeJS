@@ -7,3 +7,5 @@ console.log(10+"10");
 console.log(0+null)
 
 console.log(null==true)
+
+console.log(undefined == true)
