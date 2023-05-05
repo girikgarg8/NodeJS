@@ -9,3 +9,5 @@ console.log(0+null)
 console.log(null==true)
 
 console.log(undefined == true)
+
+console.log(NaN==NaN)
