@@ -11,3 +11,5 @@ console.log(null==true)
 console.log(undefined == true)
 
 console.log(NaN==NaN)
+
+console.log(NaN === NaN)
